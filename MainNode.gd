@@ -1,6 +1,7 @@
 extends Node
 
 @onready var _cursor = $CursorNode/AnimatedSprite2D
+@onready var _cursorChar = $CursorNode
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,10 +17,10 @@ func _process(delta):
 func _drawMap():
 	var x = -16
 	var y = -16
-	for n in 5:
+	for n in 20:
 		y = -16
 		x += 32
-		for j in 3:
+		for j in 20:
 			y += 32
 			var tileBody = StaticBody2D.new()
 			var tileCol = CollisionShape2D.new()

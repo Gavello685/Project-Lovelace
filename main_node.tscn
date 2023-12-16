@@ -1,8 +1,33 @@
-[gd_scene load_steps=2 format=3 uid="uid://cqfr5rq5ridlm"]
+[gd_scene load_steps=5 format=3 uid="uid://cqfr5rq5ridlm"]
 
 [ext_resource type="Script" path="res://MainNode.gd" id="1_eacd3"]
+[ext_resource type="Texture2D" uid="uid://dfos13rrtyuob" path="res://cursor1.png" id="2_pt5jf"]
+[ext_resource type="Texture2D" uid="uid://d3rduhhwe1kym" path="res://cursor2.png" id="3_pwgdk"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xlfar"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_pt5jf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_pwgdk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
 
 [node name="MainNode" type="Node"]
 script = ExtResource("1_eacd3")
 
 [node name="MapNode" type="Node2D" parent="."]
+
+[node name="CursorNode" type="CharacterBody2D" parent="."]
+position = Vector2(16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CursorNode"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CursorNode"]
+sprite_frames = SubResource("SpriteFrames_xlfar")
+frame_progress = 0.985677

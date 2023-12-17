@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cqfr5rq5ridlm"]
+[gd_scene load_steps=7 format=3 uid="uid://cqfr5rq5ridlm"]
 
 [ext_resource type="Script" path="res://MainNode.gd" id="1_eacd3"]
 [ext_resource type="Script" path="res://CursorNode.gd" id="2_cpovr"]
 [ext_resource type="Texture2D" uid="uid://dfos13rrtyuob" path="res://cursor1.png" id="2_pt5jf"]
 [ext_resource type="Texture2D" uid="uid://d3rduhhwe1kym" path="res://cursor2.png" id="3_pwgdk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_64h7u"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xlfar"]
 animations = [{
@@ -29,7 +31,19 @@ position = Vector2(16, 16)
 script = ExtResource("2_cpovr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CursorNode"]
+shape = SubResource("RectangleShape2D_64h7u")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CursorNode"]
 sprite_frames = SubResource("SpriteFrames_xlfar")
-frame_progress = 0.682002
+
+[node name="XLabel" type="Label" parent="."]
+offset_left = 678.0
+offset_top = 26.0
+offset_right = 718.0
+offset_bottom = 49.0
+
+[node name="YLabel" type="Label" parent="."]
+offset_left = 678.0
+offset_top = 53.0
+offset_right = 718.0
+offset_bottom = 76.0

@@ -1,7 +1,14 @@
 extends Node
 
 @onready var _cursor = $CursorNode/AnimatedSprite2D
-@onready var _cursorChar = $CursorNode
+@onready var _cursorSprite = $CursorNode
+@onready var _Xlabel = $XLabel
+@onready var _YLabel = $YLabel
+var tileSize = 32
+var mapWidth = 20
+var mapHeight = 20
+var xPos = 0
+var yPos = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -10,18 +17,22 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	xPos = (_cursorSprite.position.x - tileSize/2) / tileSize + 1
+	yPos = (_cursorSprite.position.y - tileSize/2) / tileSize + 1
 	_cursor.play("default")
+	_Xlabel.text = "X: " + str(xPos)
+	_YLabel.text = "Y: " + str(yPos)
 	pass
 
 
 func _drawMap():
-	var x = -16
-	var y = -16
-	for n in 20:
-		y = -16
-		x += 32
-		for j in 20:
-			y += 32
+	var x = -tileSize/2
+	var y = -tileSize/2
+	for n in mapWidth:
+		y = -tileSize/2
+		x += tileSize
+		for j in mapHeight:
+			y += tileSize
 			var tileBody = StaticBody2D.new()
 			var tileCol = CollisionShape2D.new()
 			tileBody.add_child(tileCol)

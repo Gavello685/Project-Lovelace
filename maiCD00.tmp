@@ -36,21 +36,19 @@ shape = SubResource("RectangleShape2D_64h7u")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CursorNode"]
 sprite_frames = SubResource("SpriteFrames_xlfar")
 
-[node name="Node" type="Node" parent="."]
-
-[node name="XLabel" type="Label" parent="Node"]
+[node name="XLabel" type="Label" parent="."]
 offset_left = 678.0
 offset_top = 26.0
 offset_right = 718.0
 offset_bottom = 49.0
 
-[node name="YLabel" type="Label" parent="Node"]
+[node name="YLabel" type="Label" parent="."]
 offset_left = 678.0
 offset_top = 53.0
 offset_right = 718.0
 offset_bottom = 76.0
 
-[node name="TerrainLabel" type="Label" parent="Node"]
+[node name="TerrainLabel" type="Label" parent="."]
 offset_left = 678.0
 offset_top = 89.0
 offset_right = 718.0

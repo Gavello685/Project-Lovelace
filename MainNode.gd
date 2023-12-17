@@ -2,13 +2,16 @@ extends Node
 
 @onready var _cursor = $CursorNode/AnimatedSprite2D
 @onready var _cursorSprite = $CursorNode
-@onready var _Xlabel = $XLabel
-@onready var _YLabel = $YLabel
+@onready var _Xlabel = $Node/XLabel
+@onready var _YLabel = $Node/YLabel
+@onready var _TerrainLabel = $Node/TerrainLabel
 var tileSize = 32
 var mapWidth = 20
 var mapHeight = 20
 var xPos = 0
 var yPos = 0
+var grass = load('res://grass.jpg')
+var dirt = load('res://dirt.png')
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,7 +40,7 @@ func _drawMap():
 			var tileCol = CollisionShape2D.new()
 			tileBody.add_child(tileCol)
 			var tileSprite = Sprite2D.new()
-			tileSprite.texture = load('res://grass.jpg')
+			tileSprite.texture = dirt
 			tileBody.add_child(tileSprite)
 			tileBody.global_position = Vector2(x,y)
 			$MapNode.add_child(tileBody)

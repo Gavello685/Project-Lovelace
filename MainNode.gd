@@ -5,6 +5,7 @@ extends Node
 @onready var _Xlabel = $Node/XLabel
 @onready var _YLabel = $Node/YLabel
 @onready var _TerrainLabel = $Node/TerrainLabel
+@onready var _TileMap = $TileMap
 var tileSize = 32
 var mapWidth = 20
 var mapHeight = 20
@@ -15,7 +16,8 @@ var dirt = load('res://dirt.png')
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_drawMap()
+	#_drawMap()
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -25,22 +27,5 @@ func _process(delta):
 	_cursor.play("default")
 	_Xlabel.text = "X: " + str(xPos)
 	_YLabel.text = "Y: " + str(yPos)
+	_TerrainLabel.text = str(_TileMap.local_to_map(Vector2(xPos,yPos)))
 	pass
-
-
-func _drawMap():
-	var x = -tileSize/2
-	var y = -tileSize/2
-	for n in mapWidth:
-		y = -tileSize/2
-		x += tileSize
-		for j in mapHeight:
-			y += tileSize
-			var tileBody = StaticBody2D.new()
-			var tileCol = CollisionShape2D.new()
-			tileBody.add_child(tileCol)
-			var tileSprite = Sprite2D.new()
-			tileSprite.texture = dirt
-			tileBody.add_child(tileSprite)
-			tileBody.global_position = Vector2(x,y)
-			$MapNode.add_child(tileBody)

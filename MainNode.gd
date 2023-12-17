@@ -16,7 +16,6 @@ var dirt = load('res://dirt.png')
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#_drawMap()
 	pass
 
 
@@ -27,5 +26,5 @@ func _process(delta):
 	_cursor.play("default")
 	_Xlabel.text = "X: " + str(xPos)
 	_YLabel.text = "Y: " + str(yPos)
-	_TerrainLabel.text = str(_TileMap.local_to_map(Vector2(xPos,yPos)))
+	_TerrainLabel.text = str(_TileMap.get_cell_tile_data(0, Vector2i(xPos, yPos)).get_custom_data("TerrainType"))
 	pass

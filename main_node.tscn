@@ -15,6 +15,7 @@ texture_region_size = Vector2i(32, 32)
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:0/0/custom_data_0 = "grass"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3t6yx"]
 resource_name = "dirt"
@@ -28,7 +29,8 @@ texture_region_size = Vector2i(32, 32)
 [sub_resource type="TileSet" id="TileSet_qmeh1"]
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
-physics_layer_0/collision_mask = 2
+custom_data_layer_0/name = "TerrainType"
+custom_data_layer_0/type = 4
 sources/0 = SubResource("TileSetAtlasSource_d0ok6")
 sources/1 = SubResource("TileSetAtlasSource_3t6yx")
 

@@ -26,5 +26,9 @@ func _process(delta):
 	_cursor.play("default")
 	_Xlabel.text = "X: " + str(xPos)
 	_YLabel.text = "Y: " + str(yPos)
-	print(_unit.overlaps_body(_cursorSprite))
+	#print(_unit.overlaps_body(_cursorSprite))
 	pass
+	
+func _unhandled_input(event):
+	if event.is_action_pressed("select") and _unit.overlaps_body(_cursorSprite):
+		print(true)

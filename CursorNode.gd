@@ -2,7 +2,6 @@ extends CharacterBody2D
 
 @onready var mapInfo = get_node("/root/MainNode")
 @onready var _unit = $Unit
-var overlap = false
 var inputs = {
 	"right": Vector2.RIGHT,
 	"left": Vector2.LEFT,

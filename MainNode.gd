@@ -4,8 +4,8 @@ extends Node
 @onready var _cursorSprite = $CursorNode
 @onready var _Xlabel = $Node/XLabel
 @onready var _YLabel = $Node/YLabel
-@onready var _TerrainLabel = $Node/TerrainLabel
 @onready var _TileMap = $TileMap
+@onready var _unit = $Unit
 var tileSize = 32
 var mapWidth = 20
 var mapHeight = 20
@@ -26,5 +26,5 @@ func _process(delta):
 	_cursor.play("default")
 	_Xlabel.text = "X: " + str(xPos)
 	_YLabel.text = "Y: " + str(yPos)
-	_TerrainLabel.text = str(_TileMap.get_cell_tile_data(0, Vector2i(xPos, yPos)).get_custom_data("TerrainType"))
+	print(_unit.overlaps_body(_cursorSprite))
 	pass

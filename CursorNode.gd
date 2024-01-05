@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @onready var mapInfo = get_node("/root/MainNode")
+var overlap = false
 var inputs = {
 	"right": Vector2.RIGHT,
 	"left": Vector2.LEFT,
@@ -18,3 +19,4 @@ func _unhandled_input(event):
 			
 func move(dir):
 	position += inputs[dir] * mapInfo.tileSize
+

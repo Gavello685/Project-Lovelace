@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqxtthaf5187y"]
+
+[ext_resource type="Script" path="res://New_Game.gd" id="1_rw8x8"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="New_Game" type="Button" parent="."]
+layout_mode = 0
+offset_left = 309.0
+offset_top = 148.0
+offset_right = 402.0
+offset_bottom = 179.0
+text = "New Game"
+script = ExtResource("1_rw8x8")
+
+[node name="Continue" type="Button" parent="."]
+layout_mode = 0
+offset_left = 318.0
+offset_top = 112.0
+offset_right = 397.0
+offset_bottom = 143.0
+text = "Continue"
+
+[node name="Load_Game" type="Button" parent="."]
+layout_mode = 0
+offset_left = 307.0
+offset_top = 184.0
+offset_right = 403.0
+offset_bottom = 215.0
+text = "Load Game"
+
+[node name="Options" type="Button" parent="."]
+layout_mode = 0
+offset_left = 323.0
+offset_top = 220.0
+offset_right = 393.0
+offset_bottom = 251.0
+text = "Options"
+
+[node name="Quit" type="Button" parent="."]
+layout_mode = 0
+offset_left = 339.0
+offset_top = 256.0
+offset_right = 381.0
+offset_bottom = 287.0
+text = "Quit"
+
+[connection signal="pressed" from="New_Game" to="New_Game" method="_on_pressed"]

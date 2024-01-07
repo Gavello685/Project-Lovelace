@@ -25,6 +25,7 @@ func _process(delta):
 	_YLabel.text = "Y: " + str(yPos)
 	pass
 	
+	# Handles unit selection
 func _unhandled_input(event):
 	for unit in _units:
 		if event.is_action_pressed("select") and unit.overlaps_body(_cursor):
@@ -33,7 +34,8 @@ func _unhandled_input(event):
 		elif event.is_action_pressed("back"):
 			unit.unit_selected = false
 
-func _unit_toggle(unit):
+	# Toggles unit selection
+func _unit_toggle(unit): 
 		if !unit.unit_selected:
 			unit.unit_selected = true
 		else:

@@ -5,7 +5,7 @@ extends Node
 @onready var _Xlabel = $Node/XLabel
 @onready var _YLabel = $Node/YLabel
 @onready var _TileMap = $TileMap
-@onready var _unit = $Unit
+@onready var _units = [$Unit, $Unit2]
 var tileSize = 32
 var mapWidth = 20
 var mapHeight = 20
@@ -27,11 +27,19 @@ func _process(delta):
 	_cursorSprite.play("default")
 	_Xlabel.text = "X: " + str(xPos)
 	_YLabel.text = "Y: " + str(yPos)
-	print(_unit.unit_selected)
 	pass
 	
 func _unhandled_input(event):
-	if event.is_action_pressed("select") and _unit.overlaps_body(_cursor):
-		_unit.unit_selected = true
-	elif event.is_action_pressed("back"):
-		_unit.unit_selected = false
+	for unit in _units:
+		if event.is_action_pressed("select") and unit.overlaps_body(_cursor):
+			_unit_toggle(unit)
+			print(unit.get_meta("id"))
+		elif event.is_action_pressed("back"):
+			unit.unit_selected = false
+
+func _unit_toggle(unit):
+		if !unit.unit_selected:
+			unit.unit_selected = true
+		else:
+			unit.unit_selected = false
+	

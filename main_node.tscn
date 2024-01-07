@@ -67,12 +67,27 @@ layer_0/tile_data = PackedInt32Array(0, 0, 0, 1, 0, 0, 3, 0, 0, 2, 0, 0, 4, 0, 0
 [node name="Unit" type="Area2D" parent="."]
 scale = Vector2(0.25, 0.25)
 script = ExtResource("4_ao2lv")
+metadata/id = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="Unit"]
 position = Vector2(704, 64)
 texture = ExtResource("7_gwk7p")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Unit"]
+position = Vector2(704, 64)
+shape = SubResource("RectangleShape2D_jrtkk")
+
+[node name="Unit2" type="Area2D" parent="."]
+position = Vector2(0, 64)
+scale = Vector2(0.25, 0.25)
+script = ExtResource("4_ao2lv")
+metadata/id = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Unit2"]
+position = Vector2(704, 64)
+texture = ExtResource("7_gwk7p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Unit2"]
 position = Vector2(704, 64)
 shape = SubResource("RectangleShape2D_jrtkk")
 

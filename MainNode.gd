@@ -4,16 +4,12 @@ extends Node
 @onready var _cursor = $CursorNode
 @onready var _Xlabel = $Node/XLabel
 @onready var _YLabel = $Node/YLabel
-@onready var _TileMap = $TileMap
 @onready var _units = [$Unit, $Unit2]
 var tileSize = 32
 var mapWidth = 20
 var mapHeight = 20
 var xPos = 0
 var yPos = 0
-var grass = load('res://grass.jpg')
-var dirt = load('res://dirt.png')
-var unit_selected = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

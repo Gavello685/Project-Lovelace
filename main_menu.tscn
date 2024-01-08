@@ -52,3 +52,4 @@ offset_bottom = 287.0
 text = "Quit"
 
 [connection signal="pressed" from="New_Game" to="New_Game" method="_on_pressed"]
+[connection signal="pressed" from="Quit" to="New_Game" method="_on_quit_pressed"]

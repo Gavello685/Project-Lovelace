@@ -68,6 +68,11 @@ layer_0/tile_data = PackedInt32Array(0, 0, 0, 1, 0, 0, 3, 0, 0, 2, 0, 0, 4, 0, 0
 scale = Vector2(0.25, 0.25)
 script = ExtResource("4_ao2lv")
 metadata/id = 0
+metadata/Name = "Robert"
+metadata/Health = 13
+metadata/Attack = 7
+metadata/Speed = 8
+metadata/Movement = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Unit"]
 position = Vector2(704, 64)

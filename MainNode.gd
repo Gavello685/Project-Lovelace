@@ -5,6 +5,7 @@ extends Node
 @onready var _Xlabel = $Node/XLabel
 @onready var _YLabel = $Node/YLabel
 @onready var _units = [$Unit, $Unit2]
+var unit_data = JSON.parse_string("res://units.tres")
 var tileSize = 32
 var mapWidth = 20
 var mapHeight = 20
@@ -13,6 +14,7 @@ var yPos = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print(unit_data)
 	pass
 
 
@@ -30,7 +32,8 @@ func _unhandled_input(event):
 	for unit in _units:
 		if event.is_action_pressed("select") and unit.overlaps_body(_cursor):
 			_unit_toggle(unit)
-			print(unit.get_meta("id"))
+			for item in unit.get_meta_list():
+				print(unit.get_meta(item))
 		elif event.is_action_pressed("back"):
 			unit.unit_selected = false
 

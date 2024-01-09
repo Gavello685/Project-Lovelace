@@ -1,0 +1,27 @@
+[gd_resource type="JSON" format=3 uid="uid://dun7howt0d3h7"]
+
+[resource]
+data = {
+"Units": {
+"0": {
+"Attack": "6",
+"Class": "Mage",
+"Defense": "6",
+"HP": "19",
+"Magic": "12",
+"Movement": "4",
+"Name": "Joan",
+"Speed": "8"
+},
+"1": {
+"Attack": "13",
+"Class": "Warrior",
+"Defense": "9",
+"HP": "26",
+"Magic": "4",
+"Movement": "5",
+"Name": "David",
+"Speed": "5"
+}
+}
+}

@@ -1,11 +1,12 @@
 extends Node
 
+@onready var _tileMap = $TileMap
 @onready var _cursorSprite = $CursorNode/AnimatedSprite2D
 @onready var _cursor = $CursorNode
 @onready var _Xlabel = $Node/XLabel
 @onready var _YLabel = $Node/YLabel
-@onready var _units = [$Unit, $Unit2]
-var unit_data = JSON.parse_string("res://units.tres")
+@onready var _units = []
+
 var tileSize = 32
 var mapWidth = 20
 var mapHeight = 20
@@ -14,7 +15,14 @@ var yPos = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print(unit_data)
+	var unit1 = Unit.new("Joan",6,"Mage",6,19,12,4,8,"res://icon.svg")
+	unit1.position = Vector2(128-16,128-16)
+	_units.append(unit1)
+	var unit2 = Unit.new("Roger",14,"Rogue",9,15,4,6,5,"res://icon.svg")
+	unit2.position = Vector2(6*32-16,6*32-16)
+	_units.append(unit2)
+	for unit in _units:
+		_tileMap.add_child(unit)
 	pass
 
 
@@ -30,10 +38,8 @@ func _process(delta):
 	# Handles unit selection
 func _unhandled_input(event):
 	for unit in _units:
-		if event.is_action_pressed("select") and unit.overlaps_body(_cursor):
+		if event.is_action_pressed("select") and unit.overlaps_area(_cursor):
 			_unit_toggle(unit)
-			for item in unit.get_meta_list():
-				print(unit.get_meta(item))
 		elif event.is_action_pressed("back"):
 			unit.unit_selected = false
 

@@ -82,3 +82,9 @@ offset_left = 678.0
 offset_top = 53.0
 offset_right = 718.0
 offset_bottom = 76.0
+
+[node name="TurnLabel" type="Label" parent="Node"]
+offset_left = 674.0
+offset_top = 79.0
+offset_right = 714.0
+offset_bottom = 102.0

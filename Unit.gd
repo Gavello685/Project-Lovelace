@@ -13,6 +13,7 @@ var _hp
 var _magic
 var _movement
 var _speed
+var _team
 var _sprite = Sprite2D.new()
 var _hitbox = CollisionShape2D.new()
 var _shape = RectangleShape2D.new()
@@ -24,7 +25,7 @@ var inputs = {
 	"down": Vector2.DOWN,
 }
 
-func _init(name, attack, _class, defense, hp, magic, movement, speed, sprite):
+func _init(name, attack, _class, defense, hp, magic, movement, speed, team, sprite):
 	self._name = name
 	self._attack = attack
 	self._class = _class
@@ -33,6 +34,7 @@ func _init(name, attack, _class, defense, hp, magic, movement, speed, sprite):
 	self._magic = magic
 	self._movement = movement
 	self._speed = speed
+	self._team = team
 	self._sprite.texture = load(sprite)
 	self.add_child(_sprite)
 	self._shape.size = Vector2(1,1)

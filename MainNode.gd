@@ -35,21 +35,26 @@ func _process(delta):
 	_cursorSprite.play("default")
 	_Xlabel.text = "X: " + str(xPos)
 	_YLabel.text = "Y: " + str(yPos)
-	_TurnLabel.text = "Turn: " + str(turn)
+	_TurnLabel.text = "Turn: " + str(floor(turn / 2))
 	pass
 	
 	# Handles unit selection
 func _unhandled_input(event):
 	for unit in _units:
-		if event.is_action_pressed("select") and unit.overlaps_area(_cursor) and unit._team == turn:
+		if event.is_action_pressed("select") and unit.overlaps_area(_cursor) and unit._team == turn % 2 and !unit.unit_selected:
 			_unit_toggle(unit)
 		elif event.is_action_pressed("back"):
 			unit.unit_selected = false
+		if event.is_action_pressed("select") and unit.unit_selected:
+			var menu = PopupMenu.new()
+			menu.add_item("Attack")
+			menu.add_item("Item")
+			menu.position = _cursor.position
+			_cursor.add_child(menu)
+		if event.is_action_pressed("select") and unit.overlaps_area(is_instance_of(unit)):
+			_combat_start(unit, Unit)
 	if event.is_action_pressed("start"):
-		if turn:
-			turn = 0
-		else:
-			turn = 1
+		turn+= 1
 
 	# Toggles unit selection
 func _unit_toggle(unit): 
@@ -58,3 +63,6 @@ func _unit_toggle(unit):
 		else:
 			unit.unit_selected = false
 	
+func _combat_start(unit1, unit2):
+	if unit1.team != unit2.team:
+		print("Combat Started!")

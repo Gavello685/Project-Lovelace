@@ -51,8 +51,7 @@ func _unhandled_input(event):
 			menu.add_item("Item")
 			menu.position = _cursor.position
 			_cursor.add_child(menu)
-		if event.is_action_pressed("select") and unit.overlaps_area(is_instance_of(unit)):
-			_combat_start(unit, Unit)
+			menu.show()
 	if event.is_action_pressed("start"):
 		turn+= 1
 

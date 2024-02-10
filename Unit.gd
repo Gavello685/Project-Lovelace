@@ -17,6 +17,7 @@ var _team
 var _sprite = Sprite2D.new()
 var _hitbox = CollisionShape2D.new()
 var _shape = RectangleShape2D.new()
+var _startPos
 
 var inputs = {
 	"right": Vector2.RIGHT,

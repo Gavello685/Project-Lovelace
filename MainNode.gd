@@ -45,7 +45,7 @@ func _unhandled_input(event):
 			_unit_toggle(unit)
 		elif event.is_action_pressed("back"):
 			unit.unit_selected = false
-		if event.is_action_pressed("select") and unit.unit_selected:
+		if event.is_action_pressed("select") and unit.unit_selected and unit.position != unit._startPos:
 			var menu = PopupMenu.new()
 			menu.add_item("Attack")
 			menu.add_item("Item")
@@ -57,6 +57,7 @@ func _unhandled_input(event):
 
 	# Toggles unit selection
 func _unit_toggle(unit): 
+		unit._startPos = unit.position
 		if !unit.unit_selected:
 			unit.unit_selected = true
 		else:

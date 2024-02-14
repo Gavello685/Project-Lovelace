@@ -1,0 +1,24 @@
+{
+	"units": {
+		"0": {
+			"Name": "Joan",
+			"Attack": 6,
+			"Class": "Mage",
+			"Defense": 6,
+			"HP": 19,
+			"Magic": 12,
+			"Movement": 4,
+			"Speed": 8
+		},
+		"1": {
+			"Name": "David",
+			"Attack": 13,
+			"Class": "Warrior",
+			"Defense": 9,
+			"HP": 26,
+			"Magic": 4,
+			"Movement": 5,
+			"Speed": 5
+		}
+	}
+}

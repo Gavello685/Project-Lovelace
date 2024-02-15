@@ -1,6 +1,6 @@
 {
-	"units": {
-		"0": {
+	"units_newGame": [
+		{
 			"Name": "Joan",
 			"Attack": 6,
 			"Class": "Mage",
@@ -10,7 +10,7 @@
 			"Movement": 4,
 			"Speed": 8
 		},
-		"1": {
+		{
 			"Name": "David",
 			"Attack": 13,
 			"Class": "Warrior",
@@ -20,5 +20,5 @@
 			"Movement": 5,
 			"Speed": 5
 		}
-	}
+	]
 }

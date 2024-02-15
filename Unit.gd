@@ -42,8 +42,6 @@ func _init(name, attack, _class, defense, hp, magic, movement, speed, team, spri
 	self._hitbox.shape = _shape
 	self.add_child(_hitbox)
 	self.scale = Vector2(0.25,0.25)
-	
-	pass
 
 func _unhandled_input(event):
 	for dir in inputs.keys():

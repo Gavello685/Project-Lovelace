@@ -1,7 +1,7 @@
 extends Node
 
 var item_data = {}
-var units: Array[bot]
+var units: Array[Unit]
 var data_file_path = "res://units_test.json"
 var current_scene = null
 

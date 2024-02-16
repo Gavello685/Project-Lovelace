@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CharData" load_steps=3 format=3 uid="uid://xedhyhocbgkt"]
+
+[ext_resource type="Resource" uid="uid://dv08kafjcaxvc" path="res://CharacterClasses/Commoner.tres" id="1_w1473"]
+[ext_resource type="Script" path="res://Characters/CharacterData.gd" id="2_i3pkx"]
+
+[resource]
+script = ExtResource("2_i3pkx")
+charName = "Person"
+charClass = ExtResource("1_w1473")
+level = 1
+team = 0

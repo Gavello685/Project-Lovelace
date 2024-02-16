@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CharClass" load_steps=2 format=3 uid="uid://d0uuorvpwmr7w"]
+
+[ext_resource type="Script" path="res://CharacterClasses/CharacterClass.gd" id="1_jrj6r"]
+
+[resource]
+script = ExtResource("1_jrj6r")
+className = "Rogue"
+hp = 8
+attack = 2
+defense = 1
+magic = 1
+speed = 2

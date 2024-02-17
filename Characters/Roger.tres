@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CharData" load_steps=3 format=3 uid="uid://dwy3qkbwfwqkg"]
+
+[ext_resource type="Resource" uid="uid://d0uuorvpwmr7w" path="res://CharacterClasses/Rogue.tres" id="1_lfmkr"]
+[ext_resource type="Script" path="res://Characters/CharacterData.gd" id="2_qxrer"]
+
+[resource]
+script = ExtResource("2_qxrer")
+charName = "Roger"
+charClass = ExtResource("1_lfmkr")
+level = 4
+team = 1

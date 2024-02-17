@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CharData" load_steps=3 format=3 uid="uid://bbc81s8qm1xdn"]
+
+[ext_resource type="Resource" uid="uid://dlawjs6q0kpcc" path="res://CharacterClasses/Mage.tres" id="1_06du3"]
+[ext_resource type="Script" path="res://Characters/CharacterData.gd" id="2_80ftb"]
+
+[resource]
+script = ExtResource("2_80ftb")
+charName = "Joan"
+charClass = ExtResource("1_06du3")
+level = 3
+team = 0

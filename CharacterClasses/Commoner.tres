@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CharClass" load_steps=2 format=3 uid="uid://dv08kafjcaxvc"]
+
+[ext_resource type="Script" path="res://CharacterClasses/CharacterClass.gd" id="1_udefu"]
+
+[resource]
+script = ExtResource("1_udefu")
+className = "Commoner"
+hp = 5
+attack = 1
+defense = 1
+magic = 1
+speed = 1
+movement = 1

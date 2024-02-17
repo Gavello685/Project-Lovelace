@@ -1,30 +1,20 @@
 extends Button
 
-var item_data = {}
-var data_file_path = "res://unit_test.json"
-
 func _on_pressed():
-	get_tree().change_scene_to_file("res://main_node.tscn")
+	var unit1 = Unit.new("res://Characters/Joan.tres",Vector2(4*32-16,4*32-16))
+	Global.units.append(unit1)
+	var unit2 = Unit.new("res://Characters/Roger.tres",Vector2(6*32-16,6*32-16))
+	Global.units.append(unit2)
+	Global.goto_scene("res://main_node.tscn")
 
 func _on_quit_pressed():
 	get_tree().quit()
 
 func _on_load_game_pressed():
-	item_data = load_json_file(data_file_path)
-	print(JSON.stringify(item_data,"\t"))
-
-
-# HELPER FUNCTIONS
-func load_json_file(filePath: String):
-	if FileAccess.file_exists(filePath):
-		var dataFile = FileAccess.open(filePath, FileAccess.READ)
-		var parsedResults = JSON.parse_string(dataFile.get_as_text())
-		
-		if parsedResults is Dictionary:
-			return parsedResults
-		else:
-			print("Could not parse JSON file into dictionary")
-			
-	else:
-		print("Could not find JSON file")
-		
+	var unit1 = Unit.new("res://Characters/Person.tres",Vector2(1*32-16,8*32-16))
+	unit1.charData = CharData.new("Keith","res://CharacterClasses/Warrior.tres",50,0)
+	Global.units.append(unit1)
+	var unit2 = Unit.new("res://Characters/Person.tres",Vector2(5*32-16,7*32-16))
+	unit2.charData = CharData.new("Blake","res://CharacterClasses/Commoner.tres",12,1)
+	Global.units.append(unit2)
+	Global.goto_scene("res://main_node.tscn")

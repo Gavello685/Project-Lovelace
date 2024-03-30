@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://cusp5q8hwat31"]
+
+[ext_resource type="Script" path="res://LoadGame.gd" id="1_sqjjr"]
+
+[node name="LoadGame" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_sqjjr")
+
+[node name="Save1" type="Button" parent="."]
+layout_mode = 0
+offset_left = 309.0
+offset_top = 148.0
+offset_right = 371.0
+offset_bottom = 179.0
+text = "Save1"
+
+[node name="Save2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 309.0
+offset_top = 184.0
+offset_right = 371.0
+offset_bottom = 215.0
+text = "Save2"
+
+[node name="Save3" type="Button" parent="."]
+layout_mode = 0
+offset_left = 309.0
+offset_top = 220.0
+offset_right = 371.0
+offset_bottom = 251.0
+text = "Save3"
+
+[node name="Cancel" type="Button" parent="."]
+layout_mode = 0
+offset_left = 309.0
+offset_top = 256.0
+offset_right = 340.0
+offset_bottom = 287.0
+text = "Cancel"
+
+[connection signal="pressed" from="Save1" to="." method="_on_save_1_pressed"]
+[connection signal="pressed" from="Save2" to="." method="_on_save_2_pressed"]
+[connection signal="pressed" from="Save3" to="." method="_on_save_3_pressed"]
+[connection signal="pressed" from="Cancel" to="." method="_on_cancel_pressed"]

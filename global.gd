@@ -4,6 +4,7 @@ var item_data = {}
 var units: Array[Unit]
 var data_file_path = "res://units_test.json"
 var current_scene = null
+var rng = RandomNumberGenerator.new()
 
 func _ready():
 	var root = get_tree().root
@@ -24,6 +25,14 @@ func load_json_file(filePath: String):
 			
 	else:
 		print("Could not find JSON file")
+
+func position(x,y) -> Vector2:
+	return Vector2(x*32-16,y*32-16)
+
+func randomPosition() -> Vector2:
+	var x = Global.rng.randi_range(1, 12)
+	var y = Global.rng.randi_range(1, 8)
+	return position(x,y)
 
 
 func goto_scene(path):

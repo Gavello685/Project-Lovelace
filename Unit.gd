@@ -16,7 +16,7 @@ var inputs = {
 	"down": Vector2.DOWN,
 }
 
-func _init(p_charData = "res://Characters/Person.tres", p_startPos = Vector2(0,0), p_sprite = "res://icon.svg", p_shape = RectangleShape2D.new(), p_hitbox = CollisionShape2D.new()):
+func _init(p_charData = "res://Characters/Person.tres", p_startPos = Global.randomPosition(), p_sprite = "res://icon.svg", p_shape = RectangleShape2D.new(), p_hitbox = CollisionShape2D.new()):
 	charData = load(p_charData)
 	startPos = p_startPos
 	sprite = Sprite2D.new()

@@ -6,6 +6,9 @@ extends Node
 @onready var _Xlabel = $Node/XLabel
 @onready var _YLabel = $Node/YLabel
 @onready var _TurnLabel = $Node/TurnLabel
+@onready var _Selectlabel = $Node/SelectLabel
+@onready var _BackLabel = $Node/BackLabel
+@onready var _StartLabel = $Node/StartLabel
 
 var tileSize = 32
 var mapWidth = 20
@@ -16,6 +19,10 @@ var turn = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	_Selectlabel.text = "Select: Z"
+	_BackLabel.text = "Back: X"
+	_StartLabel.text = "Start: Enter"
+	
 	for unit in Global.units:
 		_tileMap.add_child(unit)
 

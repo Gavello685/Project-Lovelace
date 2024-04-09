@@ -9,6 +9,7 @@ extends Node
 @onready var _Selectlabel = $Node/SelectLabel
 @onready var _BackLabel = $Node/BackLabel
 @onready var _StartLabel = $Node/StartLabel
+@onready var _BattleMenu = $CursorNode/PopupMenu
 
 var tileSize = 32
 var mapWidth = 20
@@ -45,23 +46,39 @@ func _unhandled_input(event):
 		elif event.is_action_pressed("back"):
 			unit.unit_selected = false
 		if event.is_action_pressed("select") and unit.unit_selected and unit.position != unit.startPos:
-			var menu = PopupMenu.new()
-			menu.add_item("Attack")
-			menu.add_item("Item")
-			menu.position = _cursor.position
-			_cursor.add_child(menu)
-			menu.show()
+			_BattleMenu.clear()
+			populateMenu(unit)
+			_BattleMenu.position = _cursor.position
+			_cursor.add_child(_BattleMenu)
+			_BattleMenu.show()
 	if event.is_action_pressed("start"):
 		turn+= 1
 
 	# Toggles unit selection
-func _unit_toggle(unit): 
+func _unit_toggle(unit: Unit): 
 		unit.startPos = unit.position
 		if !unit.unit_selected:
 			unit.unit_selected = true
 		else:
 			unit.unit_selected = false
-	
-func _combat_start(unit1, unit2):
+
+func populateMenu(unit: Unit):
+	for menuId in unit.charData.selectedMenuIds:
+		_BattleMenu.add_item(unit.charData.charClass.allMenuOptions[menuId],menuId)
+
+func _combat_start(unit1: Unit, unit2: Unit):
 	if unit1.charData.team != unit2.charData.team:
 		print("Combat Started!")
+
+func _on_popup_menu_id_pressed(id):
+	match id:
+		CharClass.allMenuIds.Attack:
+			print("Attack")
+		CharClass.allMenuIds.Items:
+			print("Items")
+		CharClass.allMenuIds.Magic:
+			print("Magic")
+		CharClass.allMenuIds.Steal:
+			print("Steal")
+		CharClass.allMenuIds.Defend:
+			print("Defend")

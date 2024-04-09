@@ -9,3 +9,4 @@ charName = "Person"
 charClass = ExtResource("1_w1473")
 level = 1
 team = 0
+selectedMenuIds = Array[int]([0, 1])

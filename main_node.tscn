@@ -69,6 +69,8 @@ sprite_frames = SubResource("SpriteFrames_xlfar")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CursorNode"]
 shape = SubResource("RectangleShape2D_64h7u")
 
+[node name="PopupMenu" type="PopupMenu" parent="CursorNode"]
+
 [node name="Node" type="Node" parent="."]
 
 [node name="XLabel" type="Label" parent="Node"]
@@ -106,3 +108,5 @@ offset_left = 674.0
 offset_top = 183.0
 offset_right = 714.0
 offset_bottom = 206.0
+
+[connection signal="id_pressed" from="CursorNode/PopupMenu" to="." method="_on_popup_menu_id_pressed"]

@@ -6,6 +6,8 @@ class_name CharData
 @export var charClass: CharClass
 @export var level: int
 @export var team: int
+@export var selectedMenuIds: Array[CharClass.allMenuIds] = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items]
+var availableMenuIds = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items]
 var maxHp: int
 var maxAttack: int
 var maxDefense: int
@@ -25,6 +27,8 @@ func generateStats():
 	maxDefense = charClass.defense * level
 	maxMagic = charClass.magic * level
 	maxSpeed = charClass.speed * level
+	selectedMenuIds.append(charClass.menuIds)
+	availableMenuIds.append(charClass.menuIds)
 
 func stringify() -> String:
 	var ret = str("\nName: ",charName," (Level ",level,"):\nTeam:",team,"\nStats:","\n\tHP:",maxHp,"\n\tAttack:",maxAttack,"\n\tDefense:",maxDefense,"\n\tMagic:",maxMagic,"\n\tSpeed:",maxSpeed)

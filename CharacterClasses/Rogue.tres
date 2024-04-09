@@ -10,3 +10,4 @@ attack = 2
 defense = 1
 magic = 1
 speed = 2
+menuIds = Array[int]([3])

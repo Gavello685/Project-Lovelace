@@ -42,17 +42,17 @@ func _process(_delta):
 func _unhandled_input(event):
 	for unit in Global.units:
 		if event.is_action_pressed("select") and unit.overlaps_area(_cursor) and unit.charData.team == turn % 2 and !unit.unit_selected:
-			_unit_toggle(unit)
+			unit.unit_selected = true
 		elif event.is_action_pressed("back"):
 			unit.unit_selected = false
-		if event.is_action_pressed("select") and unit.unit_selected and unit.position != unit.startPos:
+		elif event.is_action_pressed("select") and unit.unit_selected:
 			_BattleMenu.clear()
 			populateMenu(unit)
 			_BattleMenu.position = _cursor.position
 			_cursor.add_child(_BattleMenu)
 			_BattleMenu.show()
 	if event.is_action_pressed("start"):
-		turn+= 1
+		advanceTurn()
 
 	# Toggles unit selection
 func _unit_toggle(unit: Unit): 
@@ -62,18 +62,40 @@ func _unit_toggle(unit: Unit):
 		else:
 			unit.unit_selected = false
 
+func advanceTurn():
+	turn += 1
+
 func populateMenu(unit: Unit):
 	for menuId in unit.charData.selectedMenuIds:
 		_BattleMenu.add_item(unit.charData.charClass.allMenuOptions[menuId],menuId)
 
-func _combat_start(unit1: Unit, unit2: Unit):
-	if unit1.charData.team != unit2.charData.team:
-		print("Combat Started!")
+func isAdjacent(unit1: Unit, unit2: Unit) -> bool:
+	if unit1.position.x == unit2.position.x:
+		return unit1.position.y == unit2.position.y + 32 || unit1.position.y == unit2.position.y - 32
+	if unit1.position.y == unit2.position.y:
+		return unit1.position.x == unit2.position.x + 32 || unit1.position.x == unit2.position.x - 32
+	return false
+
+func findAdjacentEnemies(attacker: Unit) -> Array[Unit]:
+	return Global.units.filter(func(unit): return attacker.charData.team != unit.charData.team && isAdjacent(attacker,unit))
+
+func _combat_start(attacker: Unit, defender: Unit):
+	print("Combat Started!")
+	var damage = attacker.charData.maxAttack - defender.charData.maxDefense
+	damage = damage if damage > 1 else 1
+	defender.charData.currentHp -=  damage
+	print(attacker.charData.charName, " did ", damage, " damage to ", defender.charData.charName, " leaving ", defender.charData.currentHp, " out of ", defender.charData.maxHp, "HP remaining")
 
 func _on_popup_menu_id_pressed(id):
+	var selectedUnit: Unit = Global.units.filter(func(unit: Unit): return unit.unit_selected)[0]
 	match id:
 		CharClass.allMenuIds.Attack:
 			print("Attack")
+			var adjacentEnemies = findAdjacentEnemies(selectedUnit)
+			if adjacentEnemies.size() > 0:
+				_combat_start(selectedUnit, adjacentEnemies[0])
+				selectedUnit.unit_selected = false
+				advanceTurn()
 		CharClass.allMenuIds.Items:
 			print("Items")
 		CharClass.allMenuIds.Magic:

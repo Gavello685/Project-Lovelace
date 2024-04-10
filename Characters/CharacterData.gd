@@ -13,6 +13,7 @@ var maxAttack: int
 var maxDefense: int
 var maxMagic: int
 var maxSpeed: int
+var currentHp: int
 
 func _init(p_charName = "Default", p_charClass = "res://CharacterClasses/Commoner.tres", p_level = 1, p_team = 0):
 	charName = p_charName
@@ -22,13 +23,14 @@ func _init(p_charName = "Default", p_charClass = "res://CharacterClasses/Commone
 	team = p_team
 
 func generateStats():
+	selectedMenuIds.append(charClass.menuIds)
+	availableMenuIds.append(charClass.menuIds)
 	maxHp = charClass.hp * level
 	maxAttack = charClass.attack * level
 	maxDefense = charClass.defense * level
 	maxMagic = charClass.magic * level
 	maxSpeed = charClass.speed * level
-	selectedMenuIds.append(charClass.menuIds)
-	availableMenuIds.append(charClass.menuIds)
+	currentHp = maxHp
 
 func stringify() -> String:
 	var ret = str("\nName: ",charName," (Level ",level,"):\nTeam:",team,"\nStats:","\n\tHP:",maxHp,"\n\tAttack:",maxAttack,"\n\tDefense:",maxDefense,"\n\tMagic:",maxMagic,"\n\tSpeed:",maxSpeed)

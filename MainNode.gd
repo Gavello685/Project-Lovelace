@@ -6,6 +6,7 @@ extends Node
 @onready var _Xlabel = $Node/XLabel
 @onready var _YLabel = $Node/YLabel
 @onready var _TurnLabel = $Node/TurnLabel
+@onready var _RoundLabel = $Node/RoundLabel
 @onready var _Selectlabel = $Node/SelectLabel
 @onready var _BackLabel = $Node/BackLabel
 @onready var _StartLabel = $Node/StartLabel
@@ -32,10 +33,18 @@ func _ready():
 func _process(_delta):
 	xPos = (_cursor.position.x - tileSize/2) / tileSize + 1
 	yPos = (_cursor.position.y - tileSize/2) / tileSize + 1
-	_cursorSprite.play("default")
+	var animation = "default"
+	for unit in Global.units:
+		if unit.overlaps_area(_cursor):
+			if unit.charData.team == turn % 2:
+				animation = "ally"
+			else:
+				animation = "enemy"
+	_cursorSprite.play(animation)
 	_Xlabel.text = "X: " + str(xPos)
 	_YLabel.text = "Y: " + str(yPos)
 	_TurnLabel.text = "Turn: " + str(floor(turn / 2))
+	_RoundLabel.text = "Round: " + str(turn % 2 + 1)
 	pass
 	
 	# Handles unit selection
@@ -49,7 +58,6 @@ func _unhandled_input(event):
 			_BattleMenu.clear()
 			populateMenu(unit)
 			_BattleMenu.position = _cursor.position
-			_cursor.add_child(_BattleMenu)
 			_BattleMenu.show()
 	if event.is_action_pressed("start"):
 		advanceTurn()

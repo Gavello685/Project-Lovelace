@@ -6,7 +6,7 @@ class_name CharData
 @export var charClass: CharClass
 @export var level: int
 @export var team: int
-@export var selectedMenuIds: Array[CharClass.allMenuIds] = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items]
+@export var selectedMenuIds = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items]
 var availableMenuIds = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items]
 var maxHp: int
 var maxAttack: int
@@ -23,6 +23,7 @@ func _init(p_charName = "Default", p_charClass = "res://CharacterClasses/Commone
 	team = p_team
 
 func generateStats():
+	print(charClass.menuIds)
 	selectedMenuIds.append(charClass.menuIds)
 	availableMenuIds.append(charClass.menuIds)
 	maxHp = charClass.hp * level

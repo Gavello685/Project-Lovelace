@@ -6,8 +6,10 @@ class_name CharData
 @export var charClass: CharClass
 @export var level: int
 @export var team: int
-@export var selectedMenuIds = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items]
-var availableMenuIds = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items]
+@export var magicKnown: Array
+@export var items: Dictionary
+@export var selectedMenuIds: Array = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items]
+var availableMenuIds: Array = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items]
 var maxHp: int
 var maxAttack: int
 var maxDefense: int
@@ -15,17 +17,18 @@ var maxMagic: int
 var maxSpeed: int
 var currentHp: int
 
-func _init(p_charName = "Default", p_charClass = "res://CharacterClasses/Commoner.tres", p_level = 1, p_team = 0):
+func _init(p_charName = "Default", p_charClass = "res://CharacterClasses/Commoner.tres", p_level = 1, p_team = 0, p_magicKnown = ["super blast","gobsmack","take it easy"], p_items = {"tincture":1, "trinkets":5}):
 	charName = p_charName
 	charClass = load(p_charClass)
 	level = p_level
 	generateStats()
 	team = p_team
+	magicKnown = p_magicKnown
+	items = p_items
 
 func generateStats():
-	print(charClass.menuIds)
-	selectedMenuIds.append(charClass.menuIds)
-	availableMenuIds.append(charClass.menuIds)
+	selectedMenuIds.append_array(charClass.menuIds)
+	availableMenuIds.append_array(charClass.menuIds)
 	maxHp = charClass.hp * level
 	maxAttack = charClass.attack * level
 	maxDefense = charClass.defense * level

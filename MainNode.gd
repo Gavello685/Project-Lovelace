@@ -10,7 +10,9 @@ extends Node
 @onready var _Selectlabel = $Node/SelectLabel
 @onready var _BackLabel = $Node/BackLabel
 @onready var _StartLabel = $Node/StartLabel
-@onready var _BattleMenu = $CursorNode/PopupMenu
+@onready var _BattleMenu = $CursorNode/BattleMenu
+@onready var _ItemSubmenu = $CursorNode/BattleMenu/ItemSubmenu
+@onready var _MagicSubmenu = $CursorNode/BattleMenu/MagicSubmenu
 
 var tileSize = 32
 var mapWidth = 20
@@ -55,7 +57,6 @@ func _unhandled_input(event):
 		elif event.is_action_pressed("back"):
 			unit.unit_selected = false
 		elif event.is_action_pressed("select") and unit.unit_selected:
-			_BattleMenu.clear()
 			populateMenu(unit)
 			_BattleMenu.position = _cursor.position
 			_BattleMenu.show()
@@ -74,8 +75,20 @@ func advanceTurn():
 	turn += 1
 
 func populateMenu(unit: Unit):
+	_BattleMenu.clear()
 	for menuId in unit.charData.selectedMenuIds:
-		_BattleMenu.add_item(unit.charData.charClass.allMenuOptions[menuId],menuId)
+		if menuId == CharClass.allMenuIds.Attack || menuId == CharClass.allMenuIds.Defend || menuId == CharClass.allMenuIds.Steal:
+			_BattleMenu.add_item(unit.charData.charClass.allMenuOptions[menuId],menuId)
+		elif menuId == CharClass.allMenuIds.Items:
+			_ItemSubmenu.clear()
+			for item in unit.charData.items:
+				_ItemSubmenu.add_item(item+ " x"+str(unit.charData.items[item]))
+			_BattleMenu.add_submenu_item(unit.charData.charClass.allMenuOptions[menuId],_ItemSubmenu.name,menuId)
+		elif menuId == CharClass.allMenuIds.Magic:
+			_MagicSubmenu.clear()
+			for spell in unit.charData.magicKnown:
+				_MagicSubmenu.add_item(spell)
+			_BattleMenu.add_submenu_item(unit.charData.charClass.allMenuOptions[menuId],_MagicSubmenu.name,menuId)
 
 func isAdjacent(unit1: Unit, unit2: Unit) -> bool:
 	if unit1.position.x == unit2.position.x:

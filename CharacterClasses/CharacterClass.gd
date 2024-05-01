@@ -23,7 +23,7 @@ var allMenuOptions = {
 @export var defense: int
 @export var magic: int
 @export var speed: int
-@export var menuIds: Array[allMenuIds]
+@export var menuIds: Array
 
 func _init(p_className = "Default", p_attack = 0, p_defense = 0, p_hp = 0, p_magic = 0, p_speed = 0, p_menuIds = []):
 	className = p_className

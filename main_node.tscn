@@ -95,7 +95,11 @@ sprite_frames = SubResource("SpriteFrames_xlfar")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CursorNode"]
 shape = SubResource("RectangleShape2D_64h7u")
 
-[node name="PopupMenu" type="PopupMenu" parent="CursorNode"]
+[node name="BattleMenu" type="PopupMenu" parent="CursorNode"]
+
+[node name="ItemSubmenu" type="PopupMenu" parent="CursorNode/BattleMenu"]
+
+[node name="MagicSubmenu" type="PopupMenu" parent="CursorNode/BattleMenu"]
 
 [node name="Node" type="Node" parent="."]
 
@@ -141,4 +145,4 @@ offset_top = 209.0
 offset_right = 714.0
 offset_bottom = 232.0
 
-[connection signal="id_pressed" from="CursorNode/PopupMenu" to="." method="_on_popup_menu_id_pressed"]
+[connection signal="id_pressed" from="CursorNode/BattleMenu" to="." method="_on_popup_menu_id_pressed"]

@@ -107,7 +107,7 @@ func _combat_start(attacker: Unit, defender: Unit):
 	defender.charData.currentHp -=  damage
 	print(attacker.charData.charName, " did ", damage, " damage to ", defender.charData.charName, " leaving ", defender.charData.currentHp, " out of ", defender.charData.maxHp, "HP remaining")
 
-func _on_popup_menu_id_pressed(id):
+func _on_battle_menu_id_pressed(id):
 	var selectedUnit: Unit = Global.units.filter(func(unit: Unit): return unit.unit_selected)[0]
 	match id:
 		CharClass.allMenuIds.Attack:
@@ -117,11 +117,20 @@ func _on_popup_menu_id_pressed(id):
 				_combat_start(selectedUnit, adjacentEnemies[0])
 				selectedUnit.unit_selected = false
 				advanceTurn()
-		CharClass.allMenuIds.Items:
-			print("Items")
-		CharClass.allMenuIds.Magic:
-			print("Magic")
 		CharClass.allMenuIds.Steal:
 			print("Steal")
 		CharClass.allMenuIds.Defend:
 			print("Defend")
+		_:
+			print("Unknown Action")
+
+
+func _on_item_submenu_id_pressed(id):
+	print("I:", _ItemSubmenu.get_item_text(_ItemSubmenu.get_item_index(id)))
+	_BattleMenu.set_item_disabled(0, true)
+	_BattleMenu.set_item_disabled(1, true)
+	print(_BattleMenu.is_item_disabled(0))
+
+
+func _on_magic_submenu_id_pressed(id):
+	print("M:", _MagicSubmenu.get_item_text(_MagicSubmenu.get_item_index(id)))

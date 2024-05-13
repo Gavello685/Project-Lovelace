@@ -10,5 +10,5 @@ func _on_pressed():
 func _on_quit_pressed():
 	get_tree().quit()
 
-func _on_load_game_pressed():	
+func _on_load_game_pressed():
 	Global.goto_scene("res://LoadGame.tscn")

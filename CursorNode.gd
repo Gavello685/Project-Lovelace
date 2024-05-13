@@ -12,9 +12,11 @@ func _ready():
 	pass
 
 func _unhandled_input(event):
-	for dir in inputs.keys():
-		if event.is_action_pressed(dir):
-				move(dir)
+	var selectedUnit: Array[Unit] = Global.units.filter(func(unit: Unit): return unit.unit_selected)
+	if selectedUnit.size() == 0:
+		for dir in inputs.keys():
+			if event.is_action_pressed(dir):
+					move(dir)
 		
 func move(dir):
 	position += inputs[dir] * mapInfo.tileSize

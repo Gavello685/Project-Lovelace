@@ -42,4 +42,7 @@ func stringify() -> String:
 	return str(charData.stringify(),"\nPosition:",position)
 
 func move(dir):
-	position += inputs[dir] * tileSize
+	var newPosition = position + (inputs[dir] * tileSize)
+	var overlappingUnits = Global.units.filter(func(unit): return newPosition == unit.position)
+	if overlappingUnits.size() == 0:
+		position = newPosition

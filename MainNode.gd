@@ -26,6 +26,7 @@ func _ready():
 	_Selectlabel.text = "Select: Z"
 	_BackLabel.text = "Back: X"
 	_StartLabel.text = "Start: Enter"
+	_BattleMenu.hide_on_item_selection = false
 	
 	for unit in Global.units:
 		_tileMap.add_child(unit)
@@ -33,8 +34,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	xPos = (_cursor.position.x - tileSize/2) / tileSize + 1
-	yPos = (_cursor.position.y - tileSize/2) / tileSize + 1
 	var animation = "default"
 	for unit in Global.units:
 		if unit.overlaps_area(_cursor):
@@ -43,11 +42,15 @@ func _process(_delta):
 			else:
 				animation = "enemy"
 	_cursorSprite.play(animation)
+	var selectedUnit: Array[Unit] = Global.units.filter(func(unit: Unit): return unit.unit_selected)
+	if selectedUnit.size() == 1:
+		_cursor.position = selectedUnit[0].position
+	xPos = (_cursor.position.x - tileSize/2) / tileSize + 1
+	yPos = (_cursor.position.y - tileSize/2) / tileSize + 1
 	_Xlabel.text = "X: " + str(xPos)
 	_YLabel.text = "Y: " + str(yPos)
 	_TurnLabel.text = "Turn: " + str(floor(turn / 2))
 	_RoundLabel.text = "Round: " + str(turn % 2 + 1)
-	pass
 	
 	# Handles unit selection
 func _unhandled_input(event):
@@ -56,6 +59,7 @@ func _unhandled_input(event):
 			unit.unit_selected = true
 		elif event.is_action_pressed("back"):
 			unit.unit_selected = false
+			_BattleMenu.hide()
 		elif event.is_action_pressed("select") and unit.unit_selected:
 			populateMenu(unit)
 			_BattleMenu.position = _cursor.position
@@ -116,6 +120,7 @@ func _on_battle_menu_id_pressed(id):
 			if adjacentEnemies.size() > 0:
 				_combat_start(selectedUnit, adjacentEnemies[0])
 				selectedUnit.unit_selected = false
+				_BattleMenu.hide()
 				advanceTurn()
 		CharClass.allMenuIds.Steal:
 			print("Steal")
@@ -127,10 +132,12 @@ func _on_battle_menu_id_pressed(id):
 
 func _on_item_submenu_id_pressed(id):
 	print("I:", _ItemSubmenu.get_item_text(_ItemSubmenu.get_item_index(id)))
-	_BattleMenu.set_item_disabled(0, true)
 	_BattleMenu.set_item_disabled(1, true)
-	print(_BattleMenu.is_item_disabled(0))
 
 
 func _on_magic_submenu_id_pressed(id):
+	var selectedUnit: Unit = Global.units.filter(func(unit: Unit): return unit.unit_selected)[0]
 	print("M:", _MagicSubmenu.get_item_text(_MagicSubmenu.get_item_index(id)))
+	selectedUnit.unit_selected = false
+	_BattleMenu.hide()
+	advanceTurn()

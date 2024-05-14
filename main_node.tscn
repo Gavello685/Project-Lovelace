@@ -96,6 +96,7 @@ sprite_frames = SubResource("SpriteFrames_xlfar")
 shape = SubResource("RectangleShape2D_64h7u")
 
 [node name="BattleMenu" type="PopupMenu" parent="CursorNode"]
+hide_on_item_selection = false
 
 [node name="ItemSubmenu" type="PopupMenu" parent="CursorNode/BattleMenu"]
 

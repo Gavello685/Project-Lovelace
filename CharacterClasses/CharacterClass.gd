@@ -9,13 +9,6 @@ enum allMenuIds {
 	Steal,
 	Defend,
 }
-var allMenuOptions = {
-	allMenuIds.Attack: "Attack",
-	allMenuIds.Items: "Items",
-	allMenuIds.Magic: "Magic",
-	allMenuIds.Steal: "Steal",
-	allMenuIds.Defend: "Defend",
-}
 
 @export var className: String
 @export var hp: int
@@ -23,7 +16,7 @@ var allMenuOptions = {
 @export var defense: int
 @export var magic: int
 @export var speed: int
-@export var menuIds: Array
+@export var menuIds: Array[allMenuIds]
 
 func _init(p_className = "Default", p_attack = 0, p_defense = 0, p_hp = 0, p_magic = 0, p_speed = 0, p_menuIds = []):
 	className = p_className

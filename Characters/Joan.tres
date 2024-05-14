@@ -9,4 +9,5 @@ charName = "Joan"
 charClass = ExtResource("1_06du3")
 level = 3
 team = 0
-selectedMenuIds = Array[int]([0, 1, 2])
+magicKnown = Array[int]([2, 0])
+items = Array[int]([0, 0, 1])

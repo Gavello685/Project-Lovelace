@@ -26,7 +26,6 @@ func _ready():
 	_Selectlabel.text = "Select: Z"
 	_BackLabel.text = "Back: X"
 	_StartLabel.text = "Start: Enter"
-	_BattleMenu.hide_on_item_selection = false
 	
 	for unit in Global.units:
 		_tileMap.add_child(unit)
@@ -82,17 +81,17 @@ func populateMenu(unit: Unit):
 	_BattleMenu.clear()
 	for menuId in unit.charData.selectedMenuIds:
 		if menuId == CharClass.allMenuIds.Attack || menuId == CharClass.allMenuIds.Defend || menuId == CharClass.allMenuIds.Steal:
-			_BattleMenu.add_item(unit.charData.charClass.allMenuOptions[menuId],menuId)
+			_BattleMenu.add_item(CharClass.allMenuIds.keys()[menuId],menuId)
 		elif menuId == CharClass.allMenuIds.Items:
 			_ItemSubmenu.clear()
 			for item in unit.charData.items:
-				_ItemSubmenu.add_item(item+ " x"+str(unit.charData.items[item]))
-			_BattleMenu.add_submenu_item(unit.charData.charClass.allMenuOptions[menuId],_ItemSubmenu.name,menuId)
+				_ItemSubmenu.add_item(CharData.allItems.keys()[item])
+			_BattleMenu.add_submenu_item(CharClass.allMenuIds.keys()[menuId],_ItemSubmenu.name,menuId)
 		elif menuId == CharClass.allMenuIds.Magic:
 			_MagicSubmenu.clear()
 			for spell in unit.charData.magicKnown:
-				_MagicSubmenu.add_item(spell)
-			_BattleMenu.add_submenu_item(unit.charData.charClass.allMenuOptions[menuId],_MagicSubmenu.name,menuId)
+				_MagicSubmenu.add_item(CharData.allSpells.keys()[spell])
+			_BattleMenu.add_submenu_item(CharClass.allMenuIds.keys()[menuId],_MagicSubmenu.name,menuId)
 
 func isAdjacent(unit1: Unit, unit2: Unit) -> bool:
 	if unit1.position.x == unit2.position.x:

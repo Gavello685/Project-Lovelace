@@ -17,7 +17,7 @@ enum allItems {
 @export var charClass: CharClass
 @export var level: int
 @export var team: int
-@export var magicKnown: Array[allSpells]
+@export var spells: Array[allSpells]
 @export var items: Array[allItems]
 var selectedMenuIds: Array[CharClass.allMenuIds] = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items]
 var availableMenuIds: Array[CharClass.allMenuIds] = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items]
@@ -28,13 +28,13 @@ var maxMagic: int
 var maxSpeed: int
 var currentHp: int
 
-func _init(p_charName = "Default", p_charClass = "res://CharacterClasses/Commoner.tres", p_level = 1, p_team = 0, p_magicKnown = [allSpells.Blastaga,allSpells.Gobsmack,allSpells.RnR], p_items = [allItems.Tincture, allItems.Trinket]):
+func _init(p_charName = "Default", p_charClass = "res://CharacterClasses/Commoner.tres", p_level = 1, p_team = 0, p_spells = [], p_items = [allItems.Tincture, allItems.Trinket]):
 	charName = p_charName
 	charClass = load(p_charClass)
 	level = p_level
 	generateStats()
 	team = p_team
-	magicKnown.assign(p_magicKnown)
+	spells.assign(p_spells)
 	items.assign(p_items)
 
 func generateStats():
@@ -47,8 +47,9 @@ func generateStats():
 	maxSpeed = charClass.speed * level
 	currentHp = maxHp
 
-func useItem():
-	pass
+func useItem(index: int):
+	var itemUsed = items.pop_at(index)
+	print("Item Used: ",CharData.allItems.keys()[itemUsed])
 
 func stringify() -> String:
 	var ret = str("\nName: ",charName," (Level ",level,"):\nTeam:",team,"\nStats:","\n\tHP:",maxHp,"\n\tAttack:",maxAttack,"\n\tDefense:",maxDefense,"\n\tMagic:",maxMagic,"\n\tSpeed:",maxSpeed)

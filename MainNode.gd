@@ -13,7 +13,7 @@ extends Node
 @onready var _BattleMenu = $CursorNode/BattleMenu
 @onready var _ItemSubmenu = $CursorNode/BattleMenu/ItemSubmenu
 @onready var _MagicSubmenu = $CursorNode/BattleMenu/MagicSubmenu
-
+var selectedUnit: Unit
 var tileSize = 32
 var mapWidth = 20
 var mapHeight = 20
@@ -41,9 +41,10 @@ func _process(_delta):
 			else:
 				animation = "enemy"
 	_cursorSprite.play(animation)
-	var selectedUnit: Array[Unit] = Global.units.filter(func(unit: Unit): return unit.unit_selected)
-	if selectedUnit.size() == 1:
-		_cursor.position = selectedUnit[0].position
+	var selectedUnits: Array[Unit] = Global.units.filter(func(unit: Unit): return unit.unit_selected)
+	if selectedUnits.size() == 1:
+		selectedUnit = selectedUnits[0]
+		_cursor.position = selectedUnit.position
 	xPos = (_cursor.position.x - tileSize/2) / tileSize + 1
 	yPos = (_cursor.position.y - tileSize/2) / tileSize + 1
 	_Xlabel.text = "X: " + str(xPos)
@@ -75,6 +76,8 @@ func _unit_toggle(unit: Unit):
 			unit.unit_selected = false
 
 func advanceTurn():
+	selectedUnit.unit_selected = false
+	_BattleMenu.hide()
 	turn += 1
 
 func populateMenu(unit: Unit):
@@ -84,14 +87,20 @@ func populateMenu(unit: Unit):
 			_BattleMenu.add_item(CharClass.allMenuIds.keys()[menuId],menuId)
 		elif menuId == CharClass.allMenuIds.Items:
 			_ItemSubmenu.clear()
-			for item in unit.charData.items:
-				_ItemSubmenu.add_item(CharData.allItems.keys()[item])
 			_BattleMenu.add_submenu_item(CharClass.allMenuIds.keys()[menuId],_ItemSubmenu.name,menuId)
+			if unit.charData.items.size() > 0:
+				for item in unit.charData.items:
+					_ItemSubmenu.add_item(CharData.allItems.keys()[item],item)
+			else:
+				_BattleMenu.set_item_disabled(1, true)
 		elif menuId == CharClass.allMenuIds.Magic:
 			_MagicSubmenu.clear()
-			for spell in unit.charData.magicKnown:
-				_MagicSubmenu.add_item(CharData.allSpells.keys()[spell])
 			_BattleMenu.add_submenu_item(CharClass.allMenuIds.keys()[menuId],_MagicSubmenu.name,menuId)
+			if unit.charData.spells.size() > 0:
+				for spell in unit.charData.spells:
+					_MagicSubmenu.add_item(CharData.allSpells.keys()[spell],spell)
+			else: 
+				_BattleMenu.set_item_disabled(_BattleMenu.get_item_index(menuId), true)
 
 func isAdjacent(unit1: Unit, unit2: Unit) -> bool:
 	if unit1.position.x == unit2.position.x:
@@ -103,40 +112,50 @@ func isAdjacent(unit1: Unit, unit2: Unit) -> bool:
 func findAdjacentEnemies(attacker: Unit) -> Array[Unit]:
 	return Global.units.filter(func(unit): return attacker.charData.team != unit.charData.team && isAdjacent(attacker,unit))
 
+func steal(thief: Unit, stuffHaver: Unit):
+	var thiefAttempt = Global.rng.randi_range(1, thief.charData.maxSpeed)
+	var stuffHaverAttempt = Global.rng.randi_range(1, stuffHaver.charData.maxSpeed)
+	
+	if thiefAttempt > stuffHaverAttempt and stuffHaver.charData.items.size() > 0:
+		var itemStolenIndex = Global.rng.randi_range(0, stuffHaver.charData.items.size() - 1)
+		var itemStolen = stuffHaver.charData.items.pop_at(itemStolenIndex)
+		thief.charData.items.append(itemStolen)
+		print("Steal Success: ",CharData.allItems.keys()[itemStolen])
+	else:
+		print("Steal Failed")
+
 func _combat_start(attacker: Unit, defender: Unit):
 	print("Combat Started!")
-	var damage = attacker.charData.maxAttack - defender.charData.maxDefense
+	var damage = attacker.charData.maxAttack - (defender.charData.maxDefense * (int(defender.defending) + 1))
 	damage = damage if damage > 1 else 1
 	defender.charData.currentHp -=  damage
 	print(attacker.charData.charName, " did ", damage, " damage to ", defender.charData.charName, " leaving ", defender.charData.currentHp, " out of ", defender.charData.maxHp, "HP remaining")
 
 func _on_battle_menu_id_pressed(id):
-	var selectedUnit: Unit = Global.units.filter(func(unit: Unit): return unit.unit_selected)[0]
+	var adjacentEnemies = findAdjacentEnemies(selectedUnit)
 	match id:
 		CharClass.allMenuIds.Attack:
 			print("Attack")
-			var adjacentEnemies = findAdjacentEnemies(selectedUnit)
 			if adjacentEnemies.size() > 0:
 				_combat_start(selectedUnit, adjacentEnemies[0])
-				selectedUnit.unit_selected = false
-				_BattleMenu.hide()
 				advanceTurn()
 		CharClass.allMenuIds.Steal:
 			print("Steal")
+			if adjacentEnemies.size() > 0:
+				steal(selectedUnit, adjacentEnemies[0])
+				advanceTurn()
 		CharClass.allMenuIds.Defend:
 			print("Defend")
+			selectedUnit.defending = true
+			advanceTurn()
 		_:
 			print("Unknown Action")
 
-
-func _on_item_submenu_id_pressed(id):
-	print("I:", _ItemSubmenu.get_item_text(_ItemSubmenu.get_item_index(id)))
+func _on_item_submenu_index_pressed(index):
+	selectedUnit.charData.useItem(index)
 	_BattleMenu.set_item_disabled(1, true)
 
 
-func _on_magic_submenu_id_pressed(id):
-	var selectedUnit: Unit = Global.units.filter(func(unit: Unit): return unit.unit_selected)[0]
-	print("M:", _MagicSubmenu.get_item_text(_MagicSubmenu.get_item_index(id)))
-	selectedUnit.unit_selected = false
-	_BattleMenu.hide()
+func _on_magic_submenu_index_pressed(index):
+	print("M:", _MagicSubmenu.get_item_text(index))
 	advanceTurn()

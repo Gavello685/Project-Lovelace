@@ -4,6 +4,7 @@ class_name Unit
 
 var tileSize = 32
 var unit_selected = false
+var defending = false
 var charData: CharData
 var startPos: Vector2
 var sprite = Sprite2D.new()

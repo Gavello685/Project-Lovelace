@@ -147,5 +147,5 @@ offset_right = 714.0
 offset_bottom = 232.0
 
 [connection signal="id_pressed" from="CursorNode/BattleMenu" to="." method="_on_battle_menu_id_pressed"]
-[connection signal="id_pressed" from="CursorNode/BattleMenu/ItemSubmenu" to="." method="_on_item_submenu_id_pressed"]
-[connection signal="id_pressed" from="CursorNode/BattleMenu/MagicSubmenu" to="." method="_on_magic_submenu_id_pressed"]
+[connection signal="index_pressed" from="CursorNode/BattleMenu/ItemSubmenu" to="." method="_on_item_submenu_index_pressed"]
+[connection signal="index_pressed" from="CursorNode/BattleMenu/MagicSubmenu" to="." method="_on_magic_submenu_index_pressed"]

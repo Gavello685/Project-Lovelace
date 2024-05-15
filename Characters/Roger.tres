@@ -9,5 +9,5 @@ charName = "Roger"
 charClass = ExtResource("1_lfmkr")
 level = 4
 team = 1
-magicKnown = Array[int]([1, 0])
+spells = Array[int]([])
 items = Array[int]([1, 0, 0, 1])

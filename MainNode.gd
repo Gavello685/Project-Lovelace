@@ -1,5 +1,11 @@
 extends Node
 
+enum inputStates {
+	freeCursor,
+	unitSelected,
+	selectingTarget,
+}
+
 @onready var _tileMap = $TileMap
 @onready var _cursorSprite = $CursorNode/AnimatedSprite2D
 @onready var _cursor = $CursorNode
@@ -14,6 +20,10 @@ extends Node
 @onready var _ItemSubmenu = $CursorNode/BattleMenu/ItemSubmenu
 @onready var _MagicSubmenu = $CursorNode/BattleMenu/MagicSubmenu
 var selectedUnit: Unit
+var adjacentEnemies: Array[Unit]
+var targettedUnit: Unit
+var targetingCallback: Callable
+var inputState: inputStates
 var tileSize = 32
 var mapWidth = 20
 var mapHeight = 20
@@ -41,10 +51,6 @@ func _process(_delta):
 			else:
 				animation = "enemy"
 	_cursorSprite.play(animation)
-	var selectedUnits: Array[Unit] = Global.units.filter(func(unit: Unit): return unit.unit_selected)
-	if selectedUnits.size() == 1:
-		selectedUnit = selectedUnits[0]
-		_cursor.position = selectedUnit.position
 	xPos = (_cursor.position.x - tileSize/2) / tileSize + 1
 	yPos = (_cursor.position.y - tileSize/2) / tileSize + 1
 	_Xlabel.text = "X: " + str(xPos)
@@ -54,16 +60,50 @@ func _process(_delta):
 	
 	# Handles unit selection
 func _unhandled_input(event):
-	for unit in Global.units:
-		if event.is_action_pressed("select") and unit.overlaps_area(_cursor) and unit.charData.team == turn % 2 and !unit.unit_selected:
-			unit.unit_selected = true
-		elif event.is_action_pressed("back"):
-			unit.unit_selected = false
-			_BattleMenu.hide()
-		elif event.is_action_pressed("select") and unit.unit_selected:
-			populateMenu(unit)
-			_BattleMenu.position = _cursor.position
-			_BattleMenu.show()
+	match inputState:
+		inputStates.freeCursor:
+			for dir in Global.directions.keys():
+				if event.is_action_pressed(dir):
+						_cursor.move(dir)
+			if _cursor.has_overlapping_areas():
+				var overlappingUnit: Unit = _cursor.get_overlapping_areas()[0]
+				if event.is_action_pressed("select") and overlappingUnit.charData.team == turn % 2:
+					overlappingUnit.unit_selected = true
+					selectedUnit = overlappingUnit
+					inputState = inputStates.unitSelected
+
+		inputStates.unitSelected:
+			for dir in Global.directions.keys():
+				if event.is_action_pressed(dir):
+						selectedUnit.move(dir)
+						_cursor.position = selectedUnit.position
+			if event.is_action_pressed("back"):
+				selectedUnit.unit_selected = false
+				selectedUnit = null
+				_BattleMenu.hide()
+				inputState = inputStates.freeCursor
+			if event.is_action_pressed("select"):
+				populateMenu(selectedUnit)
+				_BattleMenu.position = _cursor.position
+				_BattleMenu.show()
+
+		inputStates.selectingTarget:
+			if event.is_action_pressed("left") || event.is_action_pressed("up"):
+				var previousIndex = (adjacentEnemies.find(targettedUnit) - 1) % adjacentEnemies.size()
+				targettedUnit = adjacentEnemies[previousIndex]
+				_cursor.position = targettedUnit.position
+			if event.is_action_pressed("right") || event.is_action_pressed("down"):
+				var nextIndex = (adjacentEnemies.find(targettedUnit) + 1) % adjacentEnemies.size()
+				targettedUnit = adjacentEnemies[nextIndex]
+				_cursor.position = targettedUnit.position
+			if event.is_action_pressed("back"):
+				inputState = inputStates.unitSelected
+				_cursor.position = selectedUnit.position
+				targettedUnit = null
+				_BattleMenu.show()
+			if event.is_action_pressed("select"):
+				targetingCallback.call(selectedUnit, targettedUnit)
+
 	if event.is_action_pressed("start"):
 		advanceTurn()
 
@@ -77,7 +117,9 @@ func _unit_toggle(unit: Unit):
 
 func advanceTurn():
 	selectedUnit.unit_selected = false
+	selectedUnit = null
 	_BattleMenu.hide()
+	inputState = inputStates.freeCursor
 	turn += 1
 
 func populateMenu(unit: Unit):
@@ -112,6 +154,15 @@ func isAdjacent(unit1: Unit, unit2: Unit) -> bool:
 func findAdjacentEnemies(attacker: Unit) -> Array[Unit]:
 	return Global.units.filter(func(unit): return attacker.charData.team != unit.charData.team && isAdjacent(attacker,unit))
 
+func selectTarget(callback: Callable):
+	adjacentEnemies = findAdjacentEnemies(selectedUnit)
+	if adjacentEnemies.size() > 0:
+		_BattleMenu.hide()
+		targetingCallback = callback
+		inputState = inputStates.selectingTarget
+		targettedUnit = adjacentEnemies[0]
+		_cursor.position = targettedUnit.position
+
 func steal(thief: Unit, stuffHaver: Unit):
 	var thiefAttempt = Global.rng.randi_range(1, thief.charData.maxSpeed)
 	var stuffHaverAttempt = Global.rng.randi_range(1, stuffHaver.charData.maxSpeed)
@@ -123,6 +174,7 @@ func steal(thief: Unit, stuffHaver: Unit):
 		print("Steal Success: ",CharData.allItems.keys()[itemStolen])
 	else:
 		print("Steal Failed")
+	advanceTurn()
 
 func _combat_start(attacker: Unit, defender: Unit):
 	print("Combat Started!")
@@ -130,26 +182,22 @@ func _combat_start(attacker: Unit, defender: Unit):
 	damage = damage if damage > 1 else 1
 	defender.charData.currentHp -=  damage
 	print(attacker.charData.charName, " did ", damage, " damage to ", defender.charData.charName, " leaving ", defender.charData.currentHp, " out of ", defender.charData.maxHp, "HP remaining")
+	advanceTurn()
 
 func _on_battle_menu_id_pressed(id):
-	var adjacentEnemies = findAdjacentEnemies(selectedUnit)
 	match id:
 		CharClass.allMenuIds.Attack:
 			print("Attack")
-			if adjacentEnemies.size() > 0:
-				_combat_start(selectedUnit, adjacentEnemies[0])
-				advanceTurn()
+			selectTarget(_combat_start)
 		CharClass.allMenuIds.Steal:
 			print("Steal")
-			if adjacentEnemies.size() > 0:
-				steal(selectedUnit, adjacentEnemies[0])
-				advanceTurn()
+			selectTarget(steal)
 		CharClass.allMenuIds.Defend:
 			print("Defend")
 			selectedUnit.defending = true
 			advanceTurn()
 		_:
-			print("Unknown Action")
+			print("Battle Menu ID is not implemented")
 
 func _on_item_submenu_index_pressed(index):
 	selectedUnit.charData.useItem(index)

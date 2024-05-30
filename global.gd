@@ -6,6 +6,13 @@ var data_file_path = "res://units_test.json"
 var current_scene = null
 var rng = RandomNumberGenerator.new()
 
+var directions = {
+	"right": Vector2.RIGHT,
+	"left": Vector2.LEFT,
+	"up": Vector2.UP,
+	"down": Vector2.DOWN,
+}
+
 func _ready():
 	var root = get_tree().root
 	current_scene = root.get_child(root.get_child_count() - 1)

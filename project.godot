@@ -18,11 +18,15 @@ config/icon="res://Sprites/icon.svg"
 [autoload]
 
 Global="*res://global.gd"
+
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+
+Signal_Debugger="*res://addons/SignalVisualizer/Debugger/SignalDebugger.gd"
 
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
+
 
 [input]
 

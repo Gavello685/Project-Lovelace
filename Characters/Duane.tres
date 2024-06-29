@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CharData" load_steps=3 format=3 uid="uid://cw3q4d6m0pco8"]
+
+[ext_resource type="Resource" uid="uid://bfk0gga1oqsy7" path="res://CharacterClasses/Warrior.tres" id="1_dhfu2"]
+[ext_resource type="Script" path="res://Characters/CharacterData.gd" id="2_503uo"]
+
+[resource]
+script = ExtResource("2_503uo")
+charName = "Duane"
+charClass = ExtResource("1_dhfu2")
+level = 5
+team = 0
+spells = Array[int]([])
+items = Array[int]([0, 1, 0])

@@ -13,6 +13,8 @@ extends Node
 @onready var _BattleMenu = $CursorNode/BattleMenu
 @onready var _ItemSubmenu = $CursorNode/BattleMenu/ItemSubmenu
 @onready var _MagicSubmenu = $CursorNode/BattleMenu/MagicSubmenu
+@onready var _Dialogue = load("res://Test.dialogue")
+@onready var _DialogueLabel = $Node/DialogueLabel
 var selectedUnit: Unit
 var tileSize = 32
 var mapWidth = 20
@@ -83,7 +85,7 @@ func advanceTurn():
 func populateMenu(unit: Unit):
 	_BattleMenu.clear()
 	for menuId in unit.charData.selectedMenuIds:
-		if menuId == CharClass.allMenuIds.Attack || menuId == CharClass.allMenuIds.Defend || menuId == CharClass.allMenuIds.Steal:
+		if menuId == CharClass.allMenuIds.Attack || menuId == CharClass.allMenuIds.Defend || menuId == CharClass.allMenuIds.Steal || menuId == CharClass.allMenuIds.Talk:
 			_BattleMenu.add_item(CharClass.allMenuIds.keys()[menuId],menuId)
 		elif menuId == CharClass.allMenuIds.Items:
 			_ItemSubmenu.clear()
@@ -123,6 +125,10 @@ func steal(thief: Unit, stuffHaver: Unit):
 		print("Steal Success: ",CharData.allItems.keys()[itemStolen])
 	else:
 		print("Steal Failed")
+		
+func talk(yapper: Unit, Listener: Unit):
+	DialogueManager.show_dialogue_balloon(_Dialogue)
+	DialogueManager.get_next_dialogue_line(_Dialogue)
 
 func _combat_start(attacker: Unit, defender: Unit):
 	print("Combat Started!")
@@ -147,6 +153,10 @@ func _on_battle_menu_id_pressed(id):
 		CharClass.allMenuIds.Defend:
 			print("Defend")
 			selectedUnit.defending = true
+			advanceTurn()
+		CharClass.allMenuIds.Talk:
+			print("Talk")
+			talk(selectedUnit,adjacentEnemies[0])
 			advanceTurn()
 		_:
 			print("Unknown Action")

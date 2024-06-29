@@ -19,8 +19,8 @@ enum allItems {
 @export var team: int
 @export var spells: Array[allSpells]
 @export var items: Array[allItems]
-var selectedMenuIds: Array[CharClass.allMenuIds] = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items]
-var availableMenuIds: Array[CharClass.allMenuIds] = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items]
+var selectedMenuIds: Array[CharClass.allMenuIds] = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items,charClass.allMenuIds.Talk]
+var availableMenuIds: Array[CharClass.allMenuIds] = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items,charClass.allMenuIds.Talk]
 var maxHp: int
 var maxAttack: int
 var maxDefense: int

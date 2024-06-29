@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cqfr5rq5ridlm"]
+[gd_scene load_steps=17 format=3 uid="uid://cqfr5rq5ridlm"]
 
 [ext_resource type="Script" path="res://MainNode.gd" id="1_eacd3"]
 [ext_resource type="Script" path="res://CursorNode.gd" id="2_cpovr"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bk116k86o1hd4" path="res://Sprites/cursor2 - ally.png" id="6_of0qg"]
 [ext_resource type="Texture2D" uid="uid://bmi3ats7ukbe8" path="res://Sprites/cursor1 - enemy.png" id="9_khigp"]
 [ext_resource type="Texture2D" uid="uid://c76titrynyexy" path="res://Sprites/cursor2 - enemy.png" id="10_1puso"]
+[ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_label.gd" id="11_b6w1y"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d0ok6"]
 resource_name = "grass"
@@ -145,6 +146,14 @@ offset_left = 674.0
 offset_top = 209.0
 offset_right = 714.0
 offset_bottom = 232.0
+
+[node name="DialogueLabel" type="RichTextLabel" parent="Node"]
+offset_left = 1.0
+offset_top = 215.0
+offset_right = 384.0
+offset_bottom = 256.0
+script = ExtResource("11_b6w1y")
+skip_pause_at_abbreviations = PackedStringArray("Mr", "Mrs", "Ms", "Dr", "etc", "eg", "ex")
 
 [connection signal="id_pressed" from="CursorNode/BattleMenu" to="." method="_on_battle_menu_id_pressed"]
 [connection signal="index_pressed" from="CursorNode/BattleMenu/ItemSubmenu" to="." method="_on_item_submenu_index_pressed"]

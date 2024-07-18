@@ -33,13 +33,16 @@ func load_json_file(filePath: String):
 	else:
 		print("Could not find JSON file")
 
-func position(x,y) -> Vector2:
+func gridToPosition(x,y) -> Vector2:
 	return Vector2(x*32-16,y*32-16)
+
+func positionToGrid(position: Vector2) -> Vector2:
+	return Vector2((position.x-16)/32,(position.y-16)/32)
 
 func randomPosition() -> Vector2:
 	var x = Global.rng.randi_range(1, 12)
 	var y = Global.rng.randi_range(1, 8)
-	return position(x,y)
+	return gridToPosition(x,y)
 
 
 func goto_scene(path):

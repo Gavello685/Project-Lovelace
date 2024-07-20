@@ -64,7 +64,7 @@ func _unhandled_input(event):
 		inputStates.freeCursor:
 			for dir in Global.directions.keys():
 				if event.is_action_pressed(dir):
-						_cursor.move(dir)
+					_cursor.move(dir)
 			if _cursor.has_overlapping_areas():
 				var overlappingUnit: Unit = _cursor.get_overlapping_areas()[0]
 				if event.is_action_pressed("select") and overlappingUnit.charData.team == turn % 2:
@@ -75,8 +75,8 @@ func _unhandled_input(event):
 		inputStates.unitSelected:
 			for dir in Global.directions.keys():
 				if event.is_action_pressed(dir):
-						selectedUnit.move(dir)
-						_cursor.position = selectedUnit.position
+					selectedUnit.move(dir)
+					_cursor.position = selectedUnit.position
 			if event.is_action_pressed("back"):
 				selectedUnit.unit_selected = false
 				selectedUnit = null
@@ -109,11 +109,11 @@ func _unhandled_input(event):
 
 	# Toggles unit selection
 func _unit_toggle(unit: Unit): 
-		unit.startPos = unit.position
-		if !unit.unit_selected:
-			unit.unit_selected = true
-		else:
-			unit.unit_selected = false
+	unit.startPos = unit.position
+	if !unit.unit_selected:
+		unit.unit_selected = true
+	else:
+		unit.unit_selected = false
 
 func advanceTurn():
 	selectedUnit.unit_selected = false

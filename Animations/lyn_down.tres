@@ -1,0 +1,17 @@
+[gd_resource type="AnimatedTexture" load_steps=5 format=3 uid="uid://ce5w3hoq04m5x"]
+
+[ext_resource type="Texture2D" uid="uid://ddn8swvf5bpve" path="res://Sprites/Lyn_walking_down_1.png" id="1_pp0nd"]
+[ext_resource type="Texture2D" uid="uid://jmfcgwx6rgh7" path="res://Sprites/Lyn_walking_down_2.png" id="2_anh6d"]
+[ext_resource type="Texture2D" uid="uid://eco3iemufete" path="res://Sprites/Lyn_walking_down_3.png" id="3_lis86"]
+[ext_resource type="Texture2D" uid="uid://8u2y1itwimrb" path="res://Sprites/Lyn_walking_down_4.png" id="4_jxvx5"]
+
+[resource]
+frames = 4
+speed_scale = 5.0
+frame_0/texture = ExtResource("1_pp0nd")
+frame_1/texture = ExtResource("2_anh6d")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("3_lis86")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("4_jxvx5")
+frame_3/duration = 1.0

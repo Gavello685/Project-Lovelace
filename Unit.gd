@@ -10,12 +10,20 @@ var startPos: Vector2
 var sprite = Sprite2D.new()
 var shape = RectangleShape2D.new()
 var hitbox = CollisionShape2D.new()
+var animations: Dictionary = {
+	"idle": Texture2D,
+	"hovered": Texture2D,
+	"selected": Texture2D,
+	"up": Texture2D,
+	"lateral": Texture2D,
+	"down": Texture2D,
+}
 
-func _init(p_charData = "res://Characters/Person.tres", p_startPos = Global.randomPosition(), p_sprite = "res://Sprites/icon.svg", p_shape = RectangleShape2D.new(), p_hitbox = CollisionShape2D.new()):
+func _init(p_charData = "res://Characters/Person.tres", p_startPos = Global.randomPosition(), p_anim_idle = "res://Sprites/icon.svg", p_shape = RectangleShape2D.new(), p_hitbox = CollisionShape2D.new()):
 	charData = load(p_charData)
 	startPos = p_startPos
 	sprite = Sprite2D.new()
-	sprite.texture = load(p_sprite)
+	sprite.texture = load(p_anim_idle)
 	add_child(sprite)
 	shape = p_shape
 	shape.size = Vector2(1,1)

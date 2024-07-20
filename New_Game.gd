@@ -3,6 +3,7 @@ extends Button
 func _on_pressed():
 	var unit1 = Unit.new("res://Characters/Joan.tres",Global.position(4,4))
 	unit1.charData.generateStats()
+	unit1.sprite.texture = load("res://Animations/lyn_up.tres")
 	Global.units.append(unit1)
 	var unit2 = Unit.new("res://Characters/Roger.tres",Global.position(5,4))
 	unit2.charData.generateStats()

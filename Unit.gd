@@ -20,8 +20,10 @@ var animations: Dictionary = {
 }
 
 func _init(p_charData = "res://Characters/Person.tres", p_startPos = Global.randomPosition(), p_anim_idle = "res://Sprites/icon.svg", p_shape = RectangleShape2D.new(), p_hitbox = CollisionShape2D.new()):
+	z_index = 2
 	charData = load(p_charData)
 	startPos = p_startPos
+	position = startPos
 	sprite = Sprite2D.new()
 	sprite.texture = load(p_anim_idle)
 	add_child(sprite)
@@ -33,14 +35,13 @@ func _init(p_charData = "res://Characters/Person.tres", p_startPos = Global.rand
 	scale = Vector2(0.25,0.25)
 
 func _ready():
-	position = startPos
 	print(stringify())
 
 func stringify() -> String:
 	return str(charData.stringify(),"\nPosition:",position)
 
-func move(dir):
+func move(dir,inRange: Callable):
 	var newPosition = position + (Global.directions[dir] * tileSize)
 	var overlappingUnits = Global.units.filter(func(unit): return newPosition == unit.position)
-	if overlappingUnits.size() == 0:
+	if overlappingUnits.size() == 0 && inRange.call(Global.positionToGrid(startPos),Global.positionToGrid(newPosition),charData.maxSpeed):
 		position = newPosition

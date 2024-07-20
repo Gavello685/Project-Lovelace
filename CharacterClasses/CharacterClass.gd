@@ -8,6 +8,7 @@ enum allMenuIds {
 	Magic,
 	Steal,
 	Defend,
+	Talk,
 }
 
 @export var className: String

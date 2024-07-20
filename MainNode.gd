@@ -6,7 +6,7 @@ enum inputStates {
 	selectingTarget,
 }
 
-@onready var _tileMap = $TileMap
+@onready var _tileMap: Pathfinding = $TileMap
 @onready var _cursorSprite = $CursorNode/AnimatedSprite2D
 @onready var _cursor = $CursorNode
 @onready var _Xlabel = $Node/XLabel
@@ -19,6 +19,8 @@ enum inputStates {
 @onready var _BattleMenu = $CursorNode/BattleMenu
 @onready var _ItemSubmenu = $CursorNode/BattleMenu/ItemSubmenu
 @onready var _MagicSubmenu = $CursorNode/BattleMenu/MagicSubmenu
+@onready var _Dialogue = load("res://Test.dialogue")
+@onready var _DialogueLabel = $Node/DialogueLabel
 var selectedUnit: Unit
 var adjacentEnemies: Array[Unit]
 var targettedUnit: Unit
@@ -68,20 +70,20 @@ func _unhandled_input(event):
 			if _cursor.has_overlapping_areas():
 				var overlappingUnit: Unit = _cursor.get_overlapping_areas()[0]
 				if event.is_action_pressed("select") and overlappingUnit.charData.team == turn % 2:
-					overlappingUnit.unit_selected = true
-					selectedUnit = overlappingUnit
+					_unit_toggle(overlappingUnit)
+					_tileMap.show_range(Global.positionToGrid(selectedUnit.position),selectedUnit.charData.maxSpeed)
 					inputState = inputStates.unitSelected
 
 		inputStates.unitSelected:
 			for dir in Global.directions.keys():
 				if event.is_action_pressed(dir):
-					selectedUnit.move(dir)
+					selectedUnit.move(dir,_tileMap.in_range)
 					_cursor.position = selectedUnit.position
 			if event.is_action_pressed("back"):
-				selectedUnit.unit_selected = false
-				selectedUnit = null
+				_unit_toggle(selectedUnit)
 				_BattleMenu.hide()
 				inputState = inputStates.freeCursor
+				_tileMap.clear_range()
 			if event.is_action_pressed("select"):
 				populateMenu(selectedUnit)
 				_BattleMenu.position = _cursor.position
@@ -108,14 +110,19 @@ func _unhandled_input(event):
 		advanceTurn()
 
 	# Toggles unit selection
-func _unit_toggle(unit: Unit): 
-	unit.startPos = unit.position
+func _unit_toggle(unit: Unit):
 	if !unit.unit_selected:
+		unit.startPos = unit.position
 		unit.unit_selected = true
+		selectedUnit = unit
 	else:
+		_cursor.position = unit.startPos
+		unit.position = unit.startPos
 		unit.unit_selected = false
+		selectedUnit = null
 
 func advanceTurn():
+	_tileMap.clear_range()
 	selectedUnit.unit_selected = false
 	selectedUnit = null
 	_BattleMenu.hide()
@@ -125,7 +132,7 @@ func advanceTurn():
 func populateMenu(unit: Unit):
 	_BattleMenu.clear()
 	for menuId in unit.charData.selectedMenuIds:
-		if menuId == CharClass.allMenuIds.Attack || menuId == CharClass.allMenuIds.Defend || menuId == CharClass.allMenuIds.Steal:
+		if menuId == CharClass.allMenuIds.Attack || menuId == CharClass.allMenuIds.Defend || menuId == CharClass.allMenuIds.Steal || menuId == CharClass.allMenuIds.Talk:
 			_BattleMenu.add_item(CharClass.allMenuIds.keys()[menuId],menuId)
 		elif menuId == CharClass.allMenuIds.Items:
 			_ItemSubmenu.clear()
@@ -175,6 +182,11 @@ func steal(thief: Unit, stuffHaver: Unit):
 	else:
 		print("Steal Failed")
 	advanceTurn()
+		
+func talk(yapper: Unit, Listener: Unit):
+	DialogueManager.show_dialogue_balloon(_Dialogue)
+	DialogueManager.get_next_dialogue_line(_Dialogue)
+	advanceTurn()
 
 func _combat_start(attacker: Unit, defender: Unit):
 	print("Combat Started!")
@@ -196,6 +208,9 @@ func _on_battle_menu_id_pressed(id):
 			print("Defend")
 			selectedUnit.defending = true
 			advanceTurn()
+		CharClass.allMenuIds.Talk:
+			print("Talk")
+			selectTarget(talk)
 		_:
 			print("Battle Menu ID is not implemented")
 

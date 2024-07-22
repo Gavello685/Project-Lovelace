@@ -8,29 +8,29 @@ var save3: Array[Unit]
 func _ready():
 	var buttons = self.get_children()
 	# save1
-	var save1Unit1 = Unit.new("res://Characters/Person.tres")
-	save1Unit1.charData = CharData.new("Parsen","res://CharacterClasses/Rogue.tres",69,0)
+	var save1Unit1 = Unit.new()
+	save1Unit1.charData = CharData.new("Parsen","Rogue",69,0)
 	save1.append(save1Unit1)
-	var save1Unit2 = Unit.new("res://Characters/Person.tres")
-	save1Unit2.charData = CharData.new("Lex","res://CharacterClasses/Mage.tres",70,1)
+	var save1Unit2 = Unit.new()
+	save1Unit2.charData = CharData.new("Lex","Mage",70,1)
 	save1.append(save1Unit2)
 	buttons[0].set_text(save1[0].charData.charName + ' vs ' + save1[1].charData.charName)
 	
 	# save2
-	var save2Unit1 = Unit.new("res://Characters/Person.tres")
-	save2Unit1.charData = CharData.new("Keith","res://CharacterClasses/Warrior.tres",50,0)
+	var save2Unit1 = Unit.new()
+	save2Unit1.charData = CharData.new("Keith","Warrior",50,0)
 	save2.append(save2Unit1)
-	var save2Unit2 = Unit.new("res://Characters/Person.tres")
-	save2Unit2.charData = CharData.new("Blake","res://CharacterClasses/Commoner.tres",12,1)
+	var save2Unit2 = Unit.new()
+	save2Unit2.charData = CharData.new("Blake","Commoner",12,1)
 	save2.append(save2Unit2)
 	buttons[1].set_text(save2[0].charData.charName + ' vs ' + save2[1].charData.charName)
 	
 	# save3
-	var save3Unit1 = Unit.new("res://Characters/Person.tres")
-	save3Unit1.charData = CharData.new("Dez","res://CharacterClasses/Warrior.tres",1,0)
+	var save3Unit1 = Unit.new()
+	save3Unit1.charData = CharData.new("Dez","Warrior",1,0)
 	save3.append(save3Unit1)
-	var save3Unit2 = Unit.new("res://Characters/Person.tres")
-	save3Unit2.charData = CharData.new("Dorian","res://CharacterClasses/Rogue.tres",3,1)
+	var save3Unit2 = Unit.new()
+	save3Unit2.charData = CharData.new("Dorian","Rogue",3,1)
 	save3.append(save3Unit2)
 	buttons[2].set_text(save3[0].charData.charName + ' vs ' + save3[1].charData.charName)
 	

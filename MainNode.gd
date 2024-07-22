@@ -70,7 +70,7 @@ func _unhandled_input(event):
 			if _cursor.has_overlapping_areas():
 				var overlappingUnit: Unit = _cursor.get_overlapping_areas()[0]
 				if event.is_action_pressed("select") and overlappingUnit.charData.team == turn % 2:
-					_unit_toggle(overlappingUnit)
+					_unit_toggle(overlappingUnit, false)
 					_tileMap.show_range(Global.positionToGrid(selectedUnit.position),selectedUnit.charData.maxSpeed)
 					inputState = inputStates.unitSelected
 
@@ -80,7 +80,7 @@ func _unhandled_input(event):
 					selectedUnit.move(dir,_tileMap.in_range)
 					_cursor.position = selectedUnit.position
 			if event.is_action_pressed("back"):
-				_unit_toggle(selectedUnit)
+				_unit_toggle(selectedUnit, false)
 				_BattleMenu.hide()
 				inputState = inputStates.freeCursor
 				_tileMap.clear_range()
@@ -110,21 +110,24 @@ func _unhandled_input(event):
 		advanceTurn()
 
 	# Toggles unit selection
-func _unit_toggle(unit: Unit):
+func _unit_toggle(unit: Unit, endTurn: bool):
 	if !unit.unit_selected:
+		unit.sprite.play("idle",6)
 		unit.startPos = unit.position
 		unit.unit_selected = true
 		selectedUnit = unit
 	else:
-		_cursor.position = unit.startPos
-		unit.position = unit.startPos
+		if !endTurn:
+			_cursor.position = unit.startPos
+			unit.position = unit.startPos
+		unit.sprite.play("idle",-3.5,true)
 		unit.unit_selected = false
 		selectedUnit = null
+	unit.sprite.flip_h = false
 
 func advanceTurn():
 	_tileMap.clear_range()
-	selectedUnit.unit_selected = false
-	selectedUnit = null
+	_unit_toggle(selectedUnit, true)
 	_BattleMenu.hide()
 	inputState = inputStates.freeCursor
 	turn += 1

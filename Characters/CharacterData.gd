@@ -28,9 +28,9 @@ var maxMagic: int
 var maxSpeed: int
 var currentHp: int
 
-func _init(p_charName = "Default", p_charClass = "Commoner.tres", p_level = 1, p_team = 0, p_spells = [], p_items = [allItems.Tincture, allItems.Trinket]):
+func _init(p_charName = "Default", p_charClass = "Commoner", p_level = 1, p_team = 0, p_spells = [], p_items = [allItems.Tincture, allItems.Trinket]):
 	charName = p_charName
-	charClass = load("res://CharacterClasses/"+p_charClass)
+	charClass = load("res://CharacterClasses/"+p_charClass+".tres")
 	level = p_level
 	generateStats()
 	team = p_team

@@ -1,14 +1,13 @@
 extends Button
 
 func _on_pressed():
-	var unit1 = Unit.new("res://Characters/Joan.tres",Global.gridToPosition(4,4))
+	var unit1 = Unit.new("res://Characters/Joan.tres",Global.gridToPosition(2,2))
 	unit1.charData.generateStats()
-	unit1.sprite.texture = load("res://Animations/lyn_up.tres")
 	Global.units.append(unit1)
-	var unit2 = Unit.new("res://Characters/Roger.tres",Global.gridToPosition(5,4))
+	var unit2 = Unit.new("res://Characters/Roger.tres",Global.gridToPosition(3,3))
 	unit2.charData.generateStats()
 	Global.units.append(unit2)
-	var unit3 = Unit.new("res://Characters/Duane.tres",Global.gridToPosition(5,5))
+	var unit3 = Unit.new("res://Characters/Duane.tres",Global.gridToPosition(11,7))
 	unit3.charData.generateStats()
 	Global.units.append(unit3)
 	var unit4 = Unit.new("res://Characters/Leena.tres",Global.gridToPosition(4,5))

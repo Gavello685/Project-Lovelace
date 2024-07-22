@@ -44,6 +44,19 @@ func randomPosition() -> Vector2:
 	var y = Global.rng.randi_range(1, 8)
 	return gridToPosition(x,y)
 
+func get_all_file_paths(path_root: String) -> Array[String]:  
+	var file_paths: Array[String] = []  
+	var dir = DirAccess.open(path_root)  
+	dir.list_dir_begin()  
+	var file_name = dir.get_next()  
+	while file_name != "":  
+		var file_path = path_root + file_name  
+		if dir.current_is_dir():  
+			file_paths += get_all_file_paths(file_path)  
+		else:  
+			file_paths.append(file_path)  
+		file_name = dir.get_next()  
+	return file_paths
 
 func goto_scene(path):
 	# This function will usually be called from a signal callback,

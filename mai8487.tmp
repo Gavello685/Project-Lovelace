@@ -1,0 +1,165 @@
+[gd_scene load_steps=18 format=3 uid="uid://cqfr5rq5ridlm"]
+
+[ext_resource type="Script" path="res://MainNode.gd" id="1_eacd3"]
+[ext_resource type="Script" path="res://CursorNode.gd" id="2_cpovr"]
+[ext_resource type="Texture2D" uid="uid://dfos13rrtyuob" path="res://Sprites/cursor1.png" id="2_pt5jf"]
+[ext_resource type="Texture2D" uid="uid://d3rduhhwe1kym" path="res://Sprites/cursor2.png" id="3_pwgdk"]
+[ext_resource type="Script" path="res://Pathfinding.gd" id="4_fpegu"]
+[ext_resource type="Texture2D" uid="uid://62mj1nhgpk4k" path="res://grass.jpg" id="5_ddh0j"]
+[ext_resource type="Texture2D" uid="uid://dep52ht7m31ff" path="res://Sprites/cursor1 - ally.png" id="5_rwsoj"]
+[ext_resource type="Texture2D" uid="uid://cxvshoifchj0j" path="res://dirt.png" id="6_55j46"]
+[ext_resource type="Texture2D" uid="uid://bk116k86o1hd4" path="res://Sprites/cursor2 - ally.png" id="6_of0qg"]
+[ext_resource type="Texture2D" uid="uid://bmi3ats7ukbe8" path="res://Sprites/cursor1 - enemy.png" id="9_khigp"]
+[ext_resource type="Texture2D" uid="uid://c76titrynyexy" path="res://Sprites/cursor2 - enemy.png" id="10_1puso"]
+[ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_label.gd" id="11_b6w1y"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d0ok6"]
+resource_name = "grass"
+texture = ExtResource("5_ddh0j")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:0/0/custom_data_0 = "grass"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3t6yx"]
+resource_name = "dirt"
+texture = ExtResource("6_55j46")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_qmeh1"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "TerrainType"
+custom_data_layer_0/type = 4
+sources/0 = SubResource("TileSetAtlasSource_d0ok6")
+sources/1 = SubResource("TileSetAtlasSource_3t6yx")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cho0c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_rwsoj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_of0qg")
+}],
+"loop": true,
+"name": &"ally",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_pt5jf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_pwgdk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_khigp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_1puso")
+}],
+"loop": true,
+"name": &"enemy",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_64h7u"]
+size = Vector2(32, 32)
+
+[node name="MainNode" type="Node"]
+script = ExtResource("1_eacd3")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_qmeh1")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 0, 0, 1, 0, 0, 3, 0, 0, 2, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 65545, 0, 0, 65546, 0, 0, 65547, 0, 0, 131083, 0, 0, 131082, 0, 0, 131081, 0, 0, 131080, 0, 0, 131079, 0, 0, 131078, 0, 0, 131077, 0, 0, 131076, 0, 0, 131075, 0, 0, 131074, 0, 0, 131073, 0, 0, 131072, 0, 0, 196608, 0, 0, 262144, 0, 0, 327680, 0, 0, 327681, 0, 0, 262145, 0, 0, 196609, 0, 0, 196610, 0, 0, 262146, 0, 0, 327682, 0, 0, 262147, 0, 0, 196611, 0, 0, 327683, 0, 0, 327684, 0, 0, 262148, 0, 0, 262149, 0, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 262150, 0, 0, 327686, 0, 0, 327685, 0, 0, 262151, 0, 0, 327687, 0, 0, 196615, 0, 0, 196616, 0, 0, 262152, 0, 0, 327688, 0, 0, 327689, 0, 0, 262153, 0, 0, 196617, 0, 0, 196618, 0, 0, 262154, 0, 0, 327690, 0, 0, 262155, 0, 0, 196619, 0, 0, 327691, 0, 0, 393227, 0, 0, 393226, 0, 0, 393225, 0, 0, 393224, 0, 0, 393223, 0, 0, 393222, 0, 0, 393221, 0, 0, 393220, 0, 0, 393219, 0, 0, 393218, 0, 0, 393217, 0, 0, 393216, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458758, 0, 0, 458759, 0, 0, 458760, 0, 0, 458761, 0, 0, 458762, 0, 0, 458763, 0, 0, 458757, 0, 0)
+script = ExtResource("4_fpegu")
+
+[node name="CursorNode" type="Area2D" parent="."]
+z_index = 4
+position = Vector2(16, 16)
+script = ExtResource("2_cpovr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CursorNode"]
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_cho0c")
+animation = &"enemy"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CursorNode"]
+shape = SubResource("RectangleShape2D_64h7u")
+
+[node name="BattleMenu" type="PopupMenu" parent="CursorNode"]
+hide_on_item_selection = false
+
+[node name="ItemSubmenu" type="PopupMenu" parent="CursorNode/BattleMenu"]
+
+[node name="MagicSubmenu" type="PopupMenu" parent="CursorNode/BattleMenu"]
+
+[node name="Node" type="Node" parent="."]
+
+[node name="XLabel" type="Label" parent="Node"]
+offset_left = 678.0
+offset_top = 26.0
+offset_right = 718.0
+offset_bottom = 49.0
+
+[node name="YLabel" type="Label" parent="Node"]
+offset_left = 678.0
+offset_top = 53.0
+offset_right = 718.0
+offset_bottom = 76.0
+
+[node name="TurnLabel" type="Label" parent="Node"]
+offset_left = 674.0
+offset_top = 79.0
+offset_right = 714.0
+offset_bottom = 102.0
+
+[node name="RoundLabel" type="Label" parent="Node"]
+offset_left = 674.0
+offset_top = 105.0
+offset_right = 714.0
+offset_bottom = 128.0
+
+[node name="SelectLabel" type="Label" parent="Node"]
+offset_left = 674.0
+offset_top = 157.0
+offset_right = 714.0
+offset_bottom = 180.0
+
+[node name="BackLabel" type="Label" parent="Node"]
+offset_left = 674.0
+offset_top = 183.0
+offset_right = 714.0
+offset_bottom = 206.0
+
+[node name="StartLabel" type="Label" parent="Node"]
+offset_left = 674.0
+offset_top = 209.0
+offset_right = 714.0
+offset_bottom = 232.0
+
+[node name="DialogueLabel" type="RichTextLabel" parent="Node"]
+offset_left = 1.0
+offset_top = 215.0
+offset_right = 384.0
+offset_bottom = 256.0
+script = ExtResource("11_b6w1y")
+skip_pause_at_abbreviations = PackedStringArray("Mr", "Mrs", "Ms", "Dr", "etc", "eg", "ex")
+
+[connection signal="id_pressed" from="CursorNode/BattleMenu" to="." method="_on_battle_menu_id_pressed"]
+[connection signal="index_pressed" from="CursorNode/BattleMenu/ItemSubmenu" to="." method="_on_item_submenu_index_pressed"]
+[connection signal="index_pressed" from="CursorNode/BattleMenu/MagicSubmenu" to="." method="_on_magic_submenu_index_pressed"]

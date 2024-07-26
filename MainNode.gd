@@ -112,7 +112,7 @@ func _unhandled_input(event):
 	# Toggles unit selection
 func _unit_toggle(unit: Unit, endTurn: bool):
 	if !unit.unit_selected:
-		unit.sprite.play("idle",6)
+		unit.sprite.play("idle",4.5)
 		unit.startPos = unit.position
 		unit.unit_selected = true
 		selectedUnit = unit
@@ -120,7 +120,7 @@ func _unit_toggle(unit: Unit, endTurn: bool):
 		if !endTurn:
 			_cursor.position = unit.startPos
 			unit.position = unit.startPos
-		unit.sprite.play("idle",-3.5,true)
+		unit.sprite.play("idle",3.5)
 		unit.unit_selected = false
 		selectedUnit = null
 	unit.sprite.flip_h = false

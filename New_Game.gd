@@ -1,16 +1,16 @@
 extends Button
 
 func _on_pressed():
-	var unit1 = Unit.new("res://Characters/Joan.tres",Global.gridToPosition(2,2))
+	var unit1 = Unit.new("Joan",Global.gridToPosition(2,2))
 	unit1.charData.generateStats()
 	Global.units.append(unit1)
-	var unit2 = Unit.new("res://Characters/Roger.tres",Global.gridToPosition(3,3))
+	var unit2 = Unit.new("Roger",Global.gridToPosition(3,3))
 	unit2.charData.generateStats()
 	Global.units.append(unit2)
-	var unit3 = Unit.new("res://Characters/Duane.tres",Global.gridToPosition(4,2))
+	var unit3 = Unit.new("Duane",Global.gridToPosition(4,2))
 	unit3.charData.generateStats()
 	Global.units.append(unit3)
-	var unit4 = Unit.new("res://Characters/Leena.tres",Global.gridToPosition(4,5))
+	var unit4 = Unit.new("Leena",Global.gridToPosition(4,5))
 	unit4.charData.generateStats()
 	Global.units.append(unit4)
 	Global.goto_scene("res://main_node.tscn")

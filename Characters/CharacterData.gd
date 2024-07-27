@@ -19,6 +19,7 @@ enum allItems {
 @export var team: int
 @export var spells: Array[allSpells]
 @export var items: Array[allItems]
+@export var spritePath_override: String
 var selectedMenuIds: Array[CharClass.allMenuIds] = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items,charClass.allMenuIds.Talk]
 var availableMenuIds: Array[CharClass.allMenuIds] = [charClass.allMenuIds.Attack,charClass.allMenuIds.Items,charClass.allMenuIds.Talk]
 var maxHp: int
@@ -28,7 +29,7 @@ var maxMagic: int
 var maxSpeed: int
 var currentHp: int
 
-func _init(p_charName = "Default", p_charClass = "Commoner", p_level = 1, p_team = 0, p_spells = [], p_items = [allItems.Tincture, allItems.Trinket]):
+func _init(p_charName = "Commoner", p_charClass = "Commoner", p_level = 1, p_team = 0, p_spells = [], p_items = [allItems.Tincture, allItems.Trinket], p_spritePath_override = ""):
 	charName = p_charName
 	charClass = load("res://CharacterClasses/"+p_charClass+".tres")
 	level = p_level
@@ -36,6 +37,7 @@ func _init(p_charName = "Default", p_charClass = "Commoner", p_level = 1, p_team
 	team = p_team
 	spells.assign(p_spells)
 	items.assign(p_items)
+	spritePath_override = p_spritePath_override
 
 func generateStats():
 	selectedMenuIds.append_array(charClass.menuIds)

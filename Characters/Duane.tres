@@ -11,3 +11,4 @@ level = 5
 team = 0
 spells = Array[int]([])
 items = Array[int]([0, 1, 0])
+spritePath_override = "res://Animations/Lord_Ephraim.tres"

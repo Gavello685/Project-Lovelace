@@ -11,3 +11,4 @@ defense = 1
 magic = 3
 speed = 1
 menuIds = Array[int]([2])
+spritePath = "res://Animations/Mage.tres"

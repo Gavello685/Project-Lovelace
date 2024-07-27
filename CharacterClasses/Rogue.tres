@@ -11,3 +11,4 @@ defense = 1
 magic = 1
 speed = 2
 menuIds = Array[int]([3])
+spritePath = "res://Animations/Rogue.tres"

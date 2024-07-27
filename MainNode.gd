@@ -40,6 +40,7 @@ func _ready():
 	_StartLabel.text = "Start: Enter"
 	
 	for unit in Global.units:
+		unit.set_sprite_frames()
 		_tileMap.add_child(unit)
 
 
@@ -122,7 +123,7 @@ func _unit_toggle(unit: Unit, endTurn: bool):
 		if !endTurn:
 			_cursor.position = unit.startPos
 			unit.position = unit.startPos
-		unit.sprite.play("idle",3)
+		unit.sprite.play("idle",2.5)
 		unit.unit_selected = false
 		selectedUnit = null
 	unit.sprite.flip_h = false

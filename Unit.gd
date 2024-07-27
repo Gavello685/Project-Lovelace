@@ -11,15 +11,11 @@ var sprite = AnimatedSprite2D.new()
 var shape = RectangleShape2D.new()
 var hitbox = CollisionShape2D.new()
 
-func _init(p_charData = "res://Characters/Person.tres", p_startPos = Global.randomPosition(), p_anim_path = "res://Animations/Recruit1.tres", p_shape = RectangleShape2D.new(), p_hitbox = CollisionShape2D.new()):
+func _init(p_charData = "Commoner", p_startPos = Global.randomPosition(), p_shape = RectangleShape2D.new(), p_hitbox = CollisionShape2D.new()):
 	z_index = 2
-	charData = load(p_charData)
+	charData = load("res://Characters/"+p_charData+".tres")
 	startPos = p_startPos
 	position = startPos
-	sprite.sprite_frames = load(p_anim_path)
-	sprite.offset = Vector2(0,-64)
-	sprite.play("idle",3)
-	add_child(sprite)
 	shape = p_shape
 	shape.size = Vector2(1,1)
 	hitbox = p_hitbox
@@ -32,6 +28,16 @@ func _ready():
 
 func stringify() -> String:
 	return str(charData.stringify(),"\nPosition:",position)
+
+func set_sprite_frames():
+	if charData.spritePath_override:
+		sprite.sprite_frames = load(charData.spritePath_override)
+	else:
+		sprite.sprite_frames = load(charData.charClass.spritePath)
+	sprite.offset = Vector2(0,-64)
+	sprite.play("idle",2.5)
+	add_child(sprite)
+	
 
 func move(dir,inRange: Callable):
 	if dir == "right":

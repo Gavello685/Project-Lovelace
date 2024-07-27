@@ -11,3 +11,4 @@ level = 2
 team = 1
 spells = Array[int]([])
 items = Array[int]([0])
+spritePath_override = "res://Animations/Great_Lord_Eirika.tres"

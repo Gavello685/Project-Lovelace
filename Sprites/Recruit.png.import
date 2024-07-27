@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dep52ht7m31ff"
-path="res://.godot/imported/cursor1 - ally.png-ed719b5c952850e364b281af35d028df.ctex"
+uid="uid://cblgwt7rnpiux"
+path="res://.godot/imported/Recruit.png-8a782ee3cb6e30d5c4df5a8d50552f77.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/cursor1 - ally.png"
-dest_files=["res://.godot/imported/cursor1 - ally.png-ed719b5c952850e364b281af35d028df.ctex"]
+source_file="res://Sprites/Recruit.png"
+dest_files=["res://.godot/imported/Recruit.png-8a782ee3cb6e30d5c4df5a8d50552f77.ctex"]
 
 [params]
 

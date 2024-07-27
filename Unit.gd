@@ -11,13 +11,14 @@ var sprite = AnimatedSprite2D.new()
 var shape = RectangleShape2D.new()
 var hitbox = CollisionShape2D.new()
 
-func _init(p_charData = "res://Characters/Person.tres", p_startPos = Global.randomPosition(), p_anim_path = "res://Animations/Lyn_fancy.tres", p_shape = RectangleShape2D.new(), p_hitbox = CollisionShape2D.new()):
+func _init(p_charData = "res://Characters/Person.tres", p_startPos = Global.randomPosition(), p_anim_path = "res://Animations/Recruit1.tres", p_shape = RectangleShape2D.new(), p_hitbox = CollisionShape2D.new()):
 	z_index = 2
 	charData = load(p_charData)
 	startPos = p_startPos
 	position = startPos
 	sprite.sprite_frames = load(p_anim_path)
-	sprite.set_animation("idle")
+	sprite.offset = Vector2(0,-64)
+	sprite.play("idle",3)
 	add_child(sprite)
 	shape = p_shape
 	shape.size = Vector2(1,1)
@@ -33,8 +34,8 @@ func stringify() -> String:
 	return str(charData.stringify(),"\nPosition:",position)
 
 func move(dir,inRange: Callable):
-	if dir == "left":
-		sprite.play("right",6)
+	if dir == "right":
+		sprite.play("left",6)
 		sprite.set_flip_h(true)
 	else:
 		sprite.play(dir,6)

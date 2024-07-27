@@ -48,7 +48,9 @@ func _process(_delta):
 	var animation = "default"
 	for unit in Global.units:
 		if unit.overlaps_area(_cursor):
-			if unit.charData.team == turn % 2:
+			if unit.unit_selected:
+				animation = "ally_selected"
+			elif unit.charData.team == turn % 2:
 				animation = "ally"
 			else:
 				animation = "enemy"
@@ -112,7 +114,7 @@ func _unhandled_input(event):
 	# Toggles unit selection
 func _unit_toggle(unit: Unit, endTurn: bool):
 	if !unit.unit_selected:
-		unit.sprite.play("idle",4.5)
+		unit.sprite.play("selected",2.5)
 		unit.startPos = unit.position
 		unit.unit_selected = true
 		selectedUnit = unit
@@ -120,7 +122,7 @@ func _unit_toggle(unit: Unit, endTurn: bool):
 		if !endTurn:
 			_cursor.position = unit.startPos
 			unit.position = unit.startPos
-		unit.sprite.play("idle",3.5)
+		unit.sprite.play("idle",3)
 		unit.unit_selected = false
 		selectedUnit = null
 	unit.sprite.flip_h = false

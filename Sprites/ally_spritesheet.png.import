@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bk116k86o1hd4"
-path="res://.godot/imported/cursor2 - ally.png-f86eee49b77bf468ba2dd83f3d85d0e1.ctex"
+uid="uid://x5ljbk3binpd"
+path="res://.godot/imported/ally_spritesheet.png-1cebfec68147a0f276385cb6e1df5e3f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/cursor2 - ally.png"
-dest_files=["res://.godot/imported/cursor2 - ally.png-f86eee49b77bf468ba2dd83f3d85d0e1.ctex"]
+source_file="res://Sprites/ally_spritesheet.png"
+dest_files=["res://.godot/imported/ally_spritesheet.png-1cebfec68147a0f276385cb6e1df5e3f.ctex"]
 
 [params]
 

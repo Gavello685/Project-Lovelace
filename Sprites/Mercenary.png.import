@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3rduhhwe1kym"
-path="res://.godot/imported/cursor2.png-7dbe03ed87332c04332914725df3bfb1.ctex"
+uid="uid://b6yhwvn3i45tf"
+path="res://.godot/imported/Mercenary.png-7caf3ce1620f4016d858d81794858a69.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/cursor2.png"
-dest_files=["res://.godot/imported/cursor2.png-7dbe03ed87332c04332914725df3bfb1.ctex"]
+source_file="res://Sprites/Mercenary.png"
+dest_files=["res://.godot/imported/Mercenary.png-7caf3ce1620f4016d858d81794858a69.ctex"]
 
 [params]
 

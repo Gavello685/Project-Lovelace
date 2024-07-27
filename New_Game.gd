@@ -7,7 +7,7 @@ func _on_pressed():
 	var unit2 = Unit.new("res://Characters/Roger.tres",Global.gridToPosition(3,3))
 	unit2.charData.generateStats()
 	Global.units.append(unit2)
-	var unit3 = Unit.new("res://Characters/Duane.tres",Global.gridToPosition(11,7))
+	var unit3 = Unit.new("res://Characters/Duane.tres",Global.gridToPosition(4,2))
 	unit3.charData.generateStats()
 	Global.units.append(unit3)
 	var unit4 = Unit.new("res://Characters/Leena.tres",Global.gridToPosition(4,5))

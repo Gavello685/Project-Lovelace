@@ -1,16 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://cqfr5rq5ridlm"]
+[gd_scene load_steps=21 format=3 uid="uid://cqfr5rq5ridlm"]
 
 [ext_resource type="Script" path="res://MainNode.gd" id="1_eacd3"]
 [ext_resource type="Script" path="res://CursorNode.gd" id="2_cpovr"]
-[ext_resource type="Texture2D" uid="uid://dfos13rrtyuob" path="res://Sprites/cursor1.png" id="2_pt5jf"]
-[ext_resource type="Texture2D" uid="uid://d3rduhhwe1kym" path="res://Sprites/cursor2.png" id="3_pwgdk"]
 [ext_resource type="Script" path="res://Pathfinding.gd" id="4_fpegu"]
 [ext_resource type="Texture2D" uid="uid://62mj1nhgpk4k" path="res://grass.jpg" id="5_ddh0j"]
-[ext_resource type="Texture2D" uid="uid://dep52ht7m31ff" path="res://Sprites/cursor1 - ally.png" id="5_rwsoj"]
+[ext_resource type="Texture2D" uid="uid://i14neq1fjtid" path="res://Sprites/cursors.png" id="6_5gk8e"]
 [ext_resource type="Texture2D" uid="uid://cxvshoifchj0j" path="res://dirt.png" id="6_55j46"]
-[ext_resource type="Texture2D" uid="uid://bk116k86o1hd4" path="res://Sprites/cursor2 - ally.png" id="6_of0qg"]
-[ext_resource type="Texture2D" uid="uid://bmi3ats7ukbe8" path="res://Sprites/cursor1 - enemy.png" id="9_khigp"]
-[ext_resource type="Texture2D" uid="uid://c76titrynyexy" path="res://Sprites/cursor2 - enemy.png" id="10_1puso"]
 [ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_label.gd" id="11_b6w1y"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d0ok6"]
@@ -40,14 +35,46 @@ custom_data_layer_0/type = 4
 sources/0 = SubResource("TileSetAtlasSource_d0ok6")
 sources/1 = SubResource("TileSetAtlasSource_3t6yx")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_md6k3"]
+atlas = ExtResource("6_5gk8e")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3pof1"]
+atlas = ExtResource("6_5gk8e")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sly1j"]
+atlas = ExtResource("6_5gk8e")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7qbx"]
+atlas = ExtResource("6_5gk8e")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_blqtx"]
+atlas = ExtResource("6_5gk8e")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rno3y"]
+atlas = ExtResource("6_5gk8e")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6rib"]
+atlas = ExtResource("6_5gk8e")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_24ke7"]
+atlas = ExtResource("6_5gk8e")
+region = Rect2(32, 96, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_cho0c"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_rwsoj")
+"texture": SubResource("AtlasTexture_md6k3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_of0qg")
+"texture": SubResource("AtlasTexture_3pof1")
 }],
 "loop": true,
 "name": &"ally",
@@ -55,10 +82,21 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_pt5jf")
+"texture": SubResource("AtlasTexture_sly1j")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_pwgdk")
+"texture": SubResource("AtlasTexture_h7qbx")
+}],
+"loop": true,
+"name": &"ally_selected",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_blqtx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rno3y")
 }],
 "loop": true,
 "name": &"default",
@@ -66,10 +104,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("9_khigp")
+"texture": SubResource("AtlasTexture_g6rib")
 }, {
 "duration": 1.0,
-"texture": ExtResource("10_1puso")
+"texture": SubResource("AtlasTexture_24ke7")
 }],
 "loop": true,
 "name": &"enemy",
@@ -96,7 +134,7 @@ script = ExtResource("2_cpovr")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CursorNode"]
 texture_filter = 2
 sprite_frames = SubResource("SpriteFrames_cho0c")
-animation = &"enemy"
+animation = &"ally_selected"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CursorNode"]
 shape = SubResource("RectangleShape2D_64h7u")

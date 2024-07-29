@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hci4ysx045jr"
-path="res://.godot/imported/Lyn_walking_lateral_4.png-ec9ec72aaee43ebdcc9862012716f2b3.ctex"
+uid="uid://kttgbwdh3aht"
+path="res://.godot/imported/Wyvern_lord.png-31bf1c08fe28952325f5414bb7507d06.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Lyn_walking_lateral_4.png"
-dest_files=["res://.godot/imported/Lyn_walking_lateral_4.png-ec9ec72aaee43ebdcc9862012716f2b3.ctex"]
+source_file="res://Sprites/Wyvern_lord.png"
+dest_files=["res://.godot/imported/Wyvern_lord.png-31bf1c08fe28952325f5414bb7507d06.ctex"]
 
 [params]
 

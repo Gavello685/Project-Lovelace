@@ -11,4 +11,4 @@ level = 3
 team = 0
 spells = Array[int]([0, 2])
 items = Array[int]([0, 0, 1])
-spritePath_override = "res://Animations/Dancer.tres"
+spritePath_override = "res://Animations/Lyn.tres"

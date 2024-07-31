@@ -21,6 +21,7 @@ enum inputStates {
 @onready var _MagicSubmenu = $CursorNode/BattleMenu/MagicSubmenu
 @onready var _Dialogue = load("res://Test.dialogue")
 @onready var _DialogueLabel = $Node/DialogueLabel
+var units: Array[Array]
 var selectedUnit: Unit
 var adjacentEnemies: Array[Unit]
 var targettedUnit: Unit
@@ -38,11 +39,12 @@ func _ready():
 	_Selectlabel.text = "Select: Z"
 	_BackLabel.text = "Back: X"
 	_StartLabel.text = "Start: Enter"
+	units.resize(3)
 	
 	for unit in Global.units:
+		units[unit.charData.team].append(unit)
 		unit.set_sprite_frames()
 		_tileMap.add_child(unit)
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -51,7 +53,7 @@ func _process(_delta):
 		if unit.overlaps_area(_cursor):
 			if unit.unit_selected:
 				animation = "ally_selected"
-			elif unit.charData.team == turn % 2:
+			elif unit.charData.team == turn % 3 and !unit.unit_used:
 				animation = "ally"
 			else:
 				animation = "enemy"
@@ -60,10 +62,10 @@ func _process(_delta):
 	yPos = (_cursor.position.y - tileSize/2) / tileSize + 1
 	_Xlabel.text = "X: " + str(xPos)
 	_YLabel.text = "Y: " + str(yPos)
-	_TurnLabel.text = "Turn: " + str(floor(turn / 2))
-	_RoundLabel.text = "Round: " + str(turn % 2 + 1)
-	
-	# Handles unit selection
+	_TurnLabel.text = "Turn: " + str(turn / 3 + 1)
+	_RoundLabel.text = "Round: " + str(turn % 3 + 1)
+
+# Handles unit selection
 func _unhandled_input(event):
 	match inputState:
 		inputStates.freeCursor:
@@ -72,8 +74,8 @@ func _unhandled_input(event):
 					_cursor.move(dir)
 			if _cursor.has_overlapping_areas():
 				var overlappingUnit: Unit = _cursor.get_overlapping_areas()[0]
-				if event.is_action_pressed("select") and overlappingUnit.charData.team == turn % 2:
-					_unit_toggle(overlappingUnit, false)
+				if event.is_action_pressed("select") and overlappingUnit.charData.team == turn % 3 and !overlappingUnit.unit_used:
+					toggle_unit(overlappingUnit, false)
 					_tileMap.show_range(Global.positionToGrid(selectedUnit.position),selectedUnit.charData.maxSpeed)
 					inputState = inputStates.unitSelected
 
@@ -83,7 +85,7 @@ func _unhandled_input(event):
 					selectedUnit.move(dir,_tileMap.in_range)
 					_cursor.position = selectedUnit.position
 			if event.is_action_pressed("back"):
-				_unit_toggle(selectedUnit, false)
+				toggle_unit(selectedUnit, false)
 				_BattleMenu.hide()
 				inputState = inputStates.freeCursor
 				_tileMap.clear_range()
@@ -112,15 +114,15 @@ func _unhandled_input(event):
 	if event.is_action_pressed("start"):
 		advanceTurn()
 
-	# Toggles unit selection
-func _unit_toggle(unit: Unit, endTurn: bool):
+# Toggles unit selection
+func toggle_unit(unit: Unit, used: bool):
 	if !unit.unit_selected:
 		unit.sprite.play("selected",2.5)
 		unit.startPos = unit.position
 		unit.unit_selected = true
 		selectedUnit = unit
 	else:
-		if !endTurn:
+		if !used:
 			_cursor.position = unit.startPos
 			unit.position = unit.startPos
 		unit.sprite.play("idle",2.5)
@@ -128,12 +130,31 @@ func _unit_toggle(unit: Unit, endTurn: bool):
 		selectedUnit = null
 	unit.sprite.flip_h = false
 
-func advanceTurn():
+func unit_used(unit: Unit):
+	unit.unit_used = true
+	unit.shaderMaterial.set_shader_parameter("palette_row",3)
+	toggle_unit(unit, true)
+	var units_left = units[unit.charData.team].filter(func(unit): return !unit.unit_used).size()
+	if !units_left:
+		advanceTurn()
 	_tileMap.clear_range()
-	_unit_toggle(selectedUnit, true)
 	_BattleMenu.hide()
 	inputState = inputStates.freeCursor
-	turn += 1
+
+func advanceTurn():
+	if selectedUnit:
+		toggle_unit(selectedUnit, false)
+		_tileMap.clear_range()
+		_BattleMenu.hide()
+		inputState = inputStates.freeCursor
+	reset_units()
+	turn = (turn + 1) % 150
+
+func reset_units():
+	for team in units:
+		for unit in team:
+			unit.unit_used = false
+			unit.shaderMaterial.set_shader_parameter("palette_row",unit.charData.team)
 
 func populateMenu(unit: Unit):
 	_BattleMenu.clear()
@@ -187,12 +208,12 @@ func steal(thief: Unit, stuffHaver: Unit):
 		print("Steal Success: ",CharData.allItems.keys()[itemStolen])
 	else:
 		print("Steal Failed")
-	advanceTurn()
-		
+	unit_used(thief)
+
 func talk(yapper: Unit, Listener: Unit):
 	DialogueManager.show_dialogue_balloon(_Dialogue)
 	DialogueManager.get_next_dialogue_line(_Dialogue)
-	advanceTurn()
+	unit_used(yapper)
 
 func _combat_start(attacker: Unit, defender: Unit):
 	print("Combat Started!")
@@ -200,7 +221,7 @@ func _combat_start(attacker: Unit, defender: Unit):
 	damage = damage if damage > 1 else 1
 	defender.charData.currentHp -=  damage
 	print(attacker.charData.charName, " did ", damage, " damage to ", defender.charData.charName, " leaving ", defender.charData.currentHp, " out of ", defender.charData.maxHp, "HP remaining")
-	advanceTurn()
+	unit_used(attacker)
 
 func _on_battle_menu_id_pressed(id):
 	match id:
@@ -213,7 +234,7 @@ func _on_battle_menu_id_pressed(id):
 		CharClass.allMenuIds.Defend:
 			print("Defend")
 			selectedUnit.defending = true
-			advanceTurn()
+			unit_used(selectedUnit)
 		CharClass.allMenuIds.Talk:
 			print("Talk")
 			selectTarget(talk)
@@ -227,4 +248,4 @@ func _on_item_submenu_index_pressed(index):
 
 func _on_magic_submenu_index_pressed(index):
 	print("M:", _MagicSubmenu.get_item_text(index))
-	advanceTurn()
+	unit_used(selectedUnit)

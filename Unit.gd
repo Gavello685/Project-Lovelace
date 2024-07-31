@@ -4,9 +4,11 @@ class_name Unit
 
 var tileSize = 32
 var unit_selected = false
+var unit_used = false
 var defending = false
 var charData: CharData
 var startPos: Vector2
+var shaderMaterial = ShaderMaterial.new()
 var sprite = AnimatedSprite2D.new()
 var shape = RectangleShape2D.new()
 var hitbox = CollisionShape2D.new()
@@ -16,6 +18,8 @@ func _init(p_charData = "Commoner", p_startPos = Global.randomPosition(), p_shap
 	charData = load("res://Characters/"+p_charData+".tres")
 	startPos = p_startPos
 	position = startPos
+	shaderMaterial.shader = load("res://addons/PaletteSwap.gdshader")
+	shaderMaterial.set_shader_parameter("palette",load("res://Sprites/sprite_palette.png"))
 	shape = p_shape
 	shape.size = Vector2(1,1)
 	hitbox = p_hitbox
@@ -36,9 +40,6 @@ func set_sprite_frames():
 		sprite.sprite_frames = load(charData.charClass.spritePath)
 	sprite.offset = Vector2(0,-64)
 	sprite.play("idle",2.5)
-	var shaderMaterial = ShaderMaterial.new()
-	shaderMaterial.shader = load("res://addons/PaletteSwap.gdshader")
-	shaderMaterial.set_shader_parameter("palette",load("res://Sprites/sprite_palette.png"))
 	shaderMaterial.set_shader_parameter("palette_row",charData.team)
 	sprite.material = shaderMaterial
 	add_child(sprite)

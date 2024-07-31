@@ -13,6 +13,12 @@ func _on_pressed():
 	var unit4 = Unit.new("Leena",Global.gridToPosition(4,5))
 	unit4.charData.generateStats()
 	Global.units.append(unit4)
+	var unit5 = Unit.new("Carmo",Global.gridToPosition(5,5))
+	unit5.charData.generateStats()
+	Global.units.append(unit5)
+	var unit6 = Unit.new("Janson",Global.gridToPosition(2,5))
+	unit6.charData.generateStats()
+	Global.units.append(unit6)
 	Global.goto_scene("res://main_node.tscn")
 
 func _on_quit_pressed():

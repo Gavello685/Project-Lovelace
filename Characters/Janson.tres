@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CharData" load_steps=3 format=3 uid="uid://by3h30ljd4qx0"]
+
+[ext_resource type="Resource" uid="uid://bfk0gga1oqsy7" path="res://CharacterClasses/Warrior.tres" id="1_igqad"]
+[ext_resource type="Script" path="res://Characters/CharacterData.gd" id="2_685c0"]
+
+[resource]
+script = ExtResource("2_685c0")
+charName = "Janson"
+charClass = ExtResource("1_igqad")
+level = 5
+team = 2
+spells = Array[int]([])
+items = Array[int]([0, 1, 0])
+spritePath_override = "res://Animations/Lord_Eirika.tres"

@@ -36,6 +36,11 @@ func set_sprite_frames():
 		sprite.sprite_frames = load(charData.charClass.spritePath)
 	sprite.offset = Vector2(0,-64)
 	sprite.play("idle",2.5)
+	var shaderMaterial = ShaderMaterial.new()
+	shaderMaterial.shader = load("res://addons/PaletteSwap.gdshader")
+	shaderMaterial.set_shader_parameter("palette",load("res://Sprites/sprite_palette.png"))
+	shaderMaterial.set_shader_parameter("palette_row",charData.team)
+	sprite.material = shaderMaterial
 	add_child(sprite)
 	
 

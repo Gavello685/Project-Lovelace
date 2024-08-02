@@ -33,6 +33,7 @@ var mapHeight = 20
 var xPos = 0
 var yPos = 0
 var turn = 0
+var teams = 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -74,7 +75,7 @@ func _unhandled_input(event):
 					_cursor.move(dir)
 			if _cursor.has_overlapping_areas():
 				var overlappingUnit: Unit = _cursor.get_overlapping_areas()[0]
-				if event.is_action_pressed("select") and overlappingUnit.charData.team == turn % 3 and !overlappingUnit.unit_used:
+				if event.is_action_pressed("select") and overlappingUnit.charData.team == turn % teams and !overlappingUnit.unit_used:
 					toggle_unit(overlappingUnit, false)
 					_tileMap.show_range(Global.positionToGrid(selectedUnit.position),selectedUnit.charData.maxSpeed)
 					inputState = inputStates.unitSelected

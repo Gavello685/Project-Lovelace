@@ -12,9 +12,17 @@ var shaderMaterial = ShaderMaterial.new()
 var sprite = AnimatedSprite2D.new()
 var shape = RectangleShape2D.new()
 var hitbox = CollisionShape2D.new()
+var target: Unit
+
+var directions = {
+	Vector2.RIGHT: "right",
+	Vector2.LEFT: "left",
+	Vector2.UP: "up",
+	Vector2.DOWN: "down",
+}
 
 func _init(p_charData = "Commoner", p_startPos = Global.randomPosition(), p_shape = RectangleShape2D.new(), p_hitbox = CollisionShape2D.new()):
-	z_index = 2
+	z_index = 3
 	charData = load("res://Characters/"+p_charData+".tres")
 	startPos = p_startPos
 	position = startPos
@@ -43,16 +51,36 @@ func set_sprite_frames():
 	shaderMaterial.set_shader_parameter("palette_row",charData.team)
 	sprite.material = shaderMaterial
 	add_child(sprite)
+
+func choose_ai_target():
+	match charData.team:
+		1:
+			prints("enemy target select")
+		2:
+			prints("companions target select")
 	
 
-func move(dir,inRange: Callable):
-	if dir == "right":
-		sprite.play("left",6)
-		sprite.set_flip_h(true)
-	else:
-		sprite.play(dir,6)
-		sprite.set_flip_h(false)
-	var newPosition = position + (Global.directions[dir] * tileSize)
-	var overlappingUnits = Global.units.filter(func(unit): return newPosition == unit.position)
-	if overlappingUnits.size() == 0 && inRange.call(Global.positionToGrid(startPos),Global.positionToGrid(newPosition),charData.maxSpeed):
-		position = newPosition
+func complete_ai_move():
+	pass
+
+func move(path: Array[Vector2i]):
+	path.pop_front()
+	position = startPos
+	for cell in path:
+		var dir = (Vector2(cell) - Global.positionToGrid(position))
+		match dir:
+			Vector2.UP:
+				sprite.play("up",6)
+				sprite.set_flip_h(false)
+			Vector2.DOWN:
+				sprite.play("down",6)
+				sprite.set_flip_h(false)
+			Vector2.LEFT:
+				sprite.play("left",6)
+				sprite.set_flip_h(false)
+			Vector2.RIGHT:
+				sprite.play("left",6)
+				sprite.set_flip_h(true)
+		while position != Global.gridToPosition(cell.x,cell.y):
+			position += dir
+			await get_tree().create_timer(0).timeout

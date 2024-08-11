@@ -21,7 +21,6 @@ enum inputStates {
 @onready var _MagicSubmenu = $CursorNode/BattleMenu/MagicSubmenu
 @onready var _Dialogue = load("res://Test.dialogue")
 @onready var _DialogueLabel = $Node/DialogueLabel
-var units: Array[Array]
 var selectedUnit: Unit
 var adjacentEnemies: Array[Unit]
 var targettedUnit: Unit
@@ -40,27 +39,27 @@ func _ready():
 	_Selectlabel.text = "Select: Z"
 	_BackLabel.text = "Back: X"
 	_StartLabel.text = "Start: Enter"
-	units.resize(3)
 	
-	for unit in Global.units:
-		units[unit.charData.team].append(unit)
-		unit.set_sprite_frames()
-		_tileMap.add_child(unit)
+	for team in Global.units:
+		for unit in team:
+			unit.set_sprite_frames()
+			_tileMap.add_child(unit)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	var animation = "default"
-	for unit in Global.units:
-		if unit.overlaps_area(_cursor):
-			if unit.unit_selected:
-				animation = "ally_selected"
-			elif unit.charData.team == turn % 3 and !unit.unit_used:
-				animation = "ally"
-			else:
-				animation = "enemy"
+	for team in Global.units:
+		for unit in team:
+			if unit.overlaps_area(_cursor):
+				if unit.unit_selected:
+					animation = "ally_selected"
+				elif unit.charData.team == turn % 3 and !unit.unit_used:
+					animation = "ally"
+				else:
+					animation = "enemy"
 	_cursorSprite.play(animation)
-	xPos = (_cursor.position.x - tileSize/2) / tileSize + 1
-	yPos = (_cursor.position.y - tileSize/2) / tileSize + 1
+	xPos = (_cursor.position.x - tileSize/2) / tileSize
+	yPos = (_cursor.position.y - tileSize/2) / tileSize
 	_Xlabel.text = "X: " + str(xPos)
 	_YLabel.text = "Y: " + str(yPos)
 	_TurnLabel.text = "Turn: " + str(turn / 3 + 1)
@@ -76,6 +75,7 @@ func _unhandled_input(event):
 			if _cursor.has_overlapping_areas():
 				var overlappingUnit: Unit = _cursor.get_overlapping_areas()[0]
 				if event.is_action_pressed("select") and overlappingUnit.charData.team == turn % teams and !overlappingUnit.unit_used:
+					_cursor.startPos = overlappingUnit.position
 					toggle_unit(overlappingUnit, false)
 					_tileMap.show_range(Global.positionToGrid(selectedUnit.position),selectedUnit.charData.maxSpeed)
 					inputState = inputStates.unitSelected
@@ -83,14 +83,15 @@ func _unhandled_input(event):
 		inputStates.unitSelected:
 			for dir in Global.directions.keys():
 				if event.is_action_pressed(dir):
-					selectedUnit.move(dir,_tileMap.in_range)
-					_cursor.position = selectedUnit.position
+					_cursor.move_unit(dir,selectedUnit.charData.maxSpeed,_tileMap.in_range)
+					_tileMap.show_path(Global.positionToGrid(selectedUnit.startPos), Global.positionToGrid(_cursor.position))
 			if event.is_action_pressed("back"):
 				toggle_unit(selectedUnit, false)
 				_BattleMenu.hide()
 				inputState = inputStates.freeCursor
-				_tileMap.clear_range()
+				_tileMap.clear_paths()
 			if event.is_action_pressed("select"):
+				await selectedUnit.move(_tileMap.astargrid.get_id_path(Global.positionToGrid(selectedUnit.startPos),Global.positionToGrid(_cursor.position)))
 				populateMenu(selectedUnit)
 				_BattleMenu.position = _cursor.position
 				_BattleMenu.show()
@@ -135,24 +136,24 @@ func unit_used(unit: Unit):
 	unit.unit_used = true
 	unit.shaderMaterial.set_shader_parameter("palette_row",3)
 	toggle_unit(unit, true)
-	var units_left = units[unit.charData.team].filter(func(unit): return !unit.unit_used).size()
+	var units_left = Global.units[unit.charData.team].filter(func(unit): return !unit.unit_used).size()
 	if !units_left:
 		advanceTurn()
-	_tileMap.clear_range()
+	_tileMap.clear_paths()
 	_BattleMenu.hide()
 	inputState = inputStates.freeCursor
 
 func advanceTurn():
 	if selectedUnit:
 		toggle_unit(selectedUnit, false)
-		_tileMap.clear_range()
+		_tileMap.clear_paths()
 		_BattleMenu.hide()
 		inputState = inputStates.freeCursor
 	reset_units()
 	turn = (turn + 1) % 150
 
 func reset_units():
-	for team in units:
+	for team in Global.units:
 		for unit in team:
 			unit.unit_used = false
 			unit.shaderMaterial.set_shader_parameter("palette_row",unit.charData.team)
@@ -187,7 +188,16 @@ func isAdjacent(unit1: Unit, unit2: Unit) -> bool:
 	return false
 
 func findAdjacentEnemies(attacker: Unit) -> Array[Unit]:
-	return Global.units.filter(func(unit): return attacker.charData.team != unit.charData.team && isAdjacent(attacker,unit))
+	var arr: Array[Unit]
+	match attacker.charData.team:
+		Global.unit_team.PLAYER:
+			arr.assign(Global.units[Global.unit_team.ENEMY].filter(func(unit): return isAdjacent(attacker,unit)))
+		Global.unit_team.ALLY:
+			arr.assign(Global.units[Global.unit_team.ENEMY].filter(func(unit): return isAdjacent(attacker,unit)))
+		Global.unit_team.ENEMY:
+			arr.assign(Global.units[Global.unit_team.PLAYER].filter(func(unit): return isAdjacent(attacker,unit)))
+			arr.append_array(Global.units[Global.unit_team.ALLY].filter(func(unit): return isAdjacent(attacker,unit)))
+	return arr
 
 func selectTarget(callback: Callable):
 	adjacentEnemies = findAdjacentEnemies(selectedUnit)

@@ -1,7 +1,7 @@
 extends Node
 
 var item_data = {}
-var units: Array[Unit]
+var units: Array[Array]
 var data_file_path = "res://units_test.json"
 var current_scene = null
 var rng = RandomNumberGenerator.new()
@@ -13,11 +13,16 @@ var directions = {
 	"down": Vector2.DOWN,
 }
 
+enum unit_team {PLAYER, ENEMY, ALLY}
+
 func _ready():
+	units.resize(3)
 	var root = get_tree().root
 	current_scene = root.get_child(root.get_child_count() - 1)
 	item_data = load_json_file(data_file_path)
 
+func wait(seconds: float) -> void:
+	await get_tree().create_timer(seconds).timeout
 
 # HELPER FUNCTIONS
 func load_json_file(filePath: String):
@@ -37,7 +42,7 @@ func gridToPosition(x,y) -> Vector2:
 	return Vector2(x*32-16,y*32-16)
 
 func positionToGrid(position: Vector2) -> Vector2:
-	return Vector2((position.x-16)/32,(position.y-16)/32)
+	return Vector2((position.x+16)/32,(position.y+16)/32)
 
 func randomPosition() -> Vector2:
 	var x = Global.rng.randi_range(1, 12)

@@ -26,6 +26,7 @@ var adjacentEnemies: Array[Unit]
 var targettedUnit: Unit
 var targetingCallback: Callable
 var inputState: inputStates
+var moving = true
 var tileSize = 32
 var mapWidth = 20
 var mapHeight = 20
@@ -67,51 +68,53 @@ func _process(_delta):
 
 # Handles unit selection
 func _unhandled_input(event):
-	match inputState:
-		inputStates.freeCursor:
-			for dir in Global.directions.keys():
-				if event.is_action_pressed(dir):
-					_cursor.move(dir)
-			if _cursor.has_overlapping_areas():
-				var overlappingUnit: Unit = _cursor.get_overlapping_areas()[0]
-				if event.is_action_pressed("select") and overlappingUnit.charData.team == turn % teams and !overlappingUnit.unit_used:
-					_cursor.startPos = overlappingUnit.position
-					toggle_unit(overlappingUnit, false)
-					_tileMap.show_range(Global.positionToGrid(selectedUnit.position),selectedUnit.charData.maxSpeed)
+	if moving:
+		match inputState:
+			inputStates.freeCursor:
+				for dir in Global.directions.keys():
+					if event.is_action_pressed(dir):
+						_cursor.move(dir)
+				if _cursor.has_overlapping_areas():
+					var overlappingUnit: Unit = _cursor.get_overlapping_areas()[0]
+					if event.is_action_pressed("select") and overlappingUnit.charData.team == turn % teams and !overlappingUnit.unit_used:
+						_cursor.startPos = overlappingUnit.position
+						toggle_unit(overlappingUnit, false)
+						_tileMap.show_range(Global.positionToGrid(selectedUnit.position),selectedUnit.charData.maxSpeed)
+						inputState = inputStates.unitSelected
+
+			inputStates.unitSelected:
+				for dir in Global.directions.keys():
+					if event.is_action_pressed(dir):
+						_cursor.move_unit(dir,selectedUnit.charData.maxSpeed,_tileMap.in_range)
+						_tileMap.show_path(Global.positionToGrid(selectedUnit.startPos), Global.positionToGrid(_cursor.position))
+				if event.is_action_pressed("back"):
+					toggle_unit(selectedUnit, false)
+					_BattleMenu.hide()
+					inputState = inputStates.freeCursor
+					_tileMap.clear_paths()
+				if event.is_action_pressed("select"):
+					moving = false
+					moving = await selectedUnit.move(_tileMap.astargrid.get_id_path(Global.positionToGrid(selectedUnit.startPos),Global.positionToGrid(_cursor.position)))
+					populateMenu(selectedUnit)
+					_BattleMenu.position = _cursor.position
+					_BattleMenu.popup()
+
+			inputStates.selectingTarget:
+				if event.is_action_pressed("left") || event.is_action_pressed("up"):
+					var previousIndex = (adjacentEnemies.find(targettedUnit) - 1) % adjacentEnemies.size()
+					targettedUnit = adjacentEnemies[previousIndex]
+					_cursor.position = targettedUnit.position
+				if event.is_action_pressed("right") || event.is_action_pressed("down"):
+					var nextIndex = (adjacentEnemies.find(targettedUnit) + 1) % adjacentEnemies.size()
+					targettedUnit = adjacentEnemies[nextIndex]
+					_cursor.position = targettedUnit.position
+				if event.is_action_pressed("back"):
 					inputState = inputStates.unitSelected
-
-		inputStates.unitSelected:
-			for dir in Global.directions.keys():
-				if event.is_action_pressed(dir):
-					_cursor.move_unit(dir,selectedUnit.charData.maxSpeed,_tileMap.in_range)
-					_tileMap.show_path(Global.positionToGrid(selectedUnit.startPos), Global.positionToGrid(_cursor.position))
-			if event.is_action_pressed("back"):
-				toggle_unit(selectedUnit, false)
-				_BattleMenu.hide()
-				inputState = inputStates.freeCursor
-				_tileMap.clear_paths()
-			if event.is_action_pressed("select"):
-				await selectedUnit.move(_tileMap.astargrid.get_id_path(Global.positionToGrid(selectedUnit.startPos),Global.positionToGrid(_cursor.position)))
-				populateMenu(selectedUnit)
-				_BattleMenu.position = _cursor.position
-				_BattleMenu.show()
-
-		inputStates.selectingTarget:
-			if event.is_action_pressed("left") || event.is_action_pressed("up"):
-				var previousIndex = (adjacentEnemies.find(targettedUnit) - 1) % adjacentEnemies.size()
-				targettedUnit = adjacentEnemies[previousIndex]
-				_cursor.position = targettedUnit.position
-			if event.is_action_pressed("right") || event.is_action_pressed("down"):
-				var nextIndex = (adjacentEnemies.find(targettedUnit) + 1) % adjacentEnemies.size()
-				targettedUnit = adjacentEnemies[nextIndex]
-				_cursor.position = targettedUnit.position
-			if event.is_action_pressed("back"):
-				inputState = inputStates.unitSelected
-				_cursor.position = selectedUnit.position
-				targettedUnit = null
-				_BattleMenu.show()
-			if event.is_action_pressed("select"):
-				targetingCallback.call(selectedUnit, targettedUnit)
+					_cursor.position = selectedUnit.position
+					targettedUnit = null
+					_BattleMenu.popup()
+				if event.is_action_pressed("select"):
+					targetingCallback.call(selectedUnit, targettedUnit)
 
 	if event.is_action_pressed("start"):
 		advanceTurn()
@@ -260,3 +263,16 @@ func _on_item_submenu_index_pressed(index):
 func _on_magic_submenu_index_pressed(index):
 	print("M:", _MagicSubmenu.get_item_text(index))
 	unit_used(selectedUnit)
+
+
+func _on_battle_menu_window_input(event):
+	if event.is_action_pressed("back"):
+		selectedUnit.position = selectedUnit.startPos
+		selectedUnit.sprite.play("selected",2.5)
+		_BattleMenu.hide()
+
+
+func _on_battle_menu_popup_hide():
+	selectedUnit.position = selectedUnit.startPos
+	selectedUnit.sprite.play("selected",2.5)
+	_BattleMenu.hide()

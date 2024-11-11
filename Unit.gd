@@ -84,3 +84,4 @@ func move(path: Array[Vector2i]):
 		while position != Global.gridToPosition(cell.x,cell.y):
 			position += dir
 			await get_tree().create_timer(0).timeout
+	return true

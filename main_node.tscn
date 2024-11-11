@@ -1033,5 +1033,7 @@ script = ExtResource("11_b6w1y")
 skip_pause_at_abbreviations = PackedStringArray("Mr", "Mrs", "Ms", "Dr", "etc", "eg", "ex")
 
 [connection signal="id_pressed" from="CursorNode/BattleMenu" to="." method="_on_battle_menu_id_pressed"]
+[connection signal="popup_hide" from="CursorNode/BattleMenu" to="." method="_on_battle_menu_popup_hide"]
+[connection signal="window_input" from="CursorNode/BattleMenu" to="." method="_on_battle_menu_window_input"]
 [connection signal="index_pressed" from="CursorNode/BattleMenu/ItemSubmenu" to="." method="_on_item_submenu_index_pressed"]
 [connection signal="index_pressed" from="CursorNode/BattleMenu/MagicSubmenu" to="." method="_on_magic_submenu_index_pressed"]

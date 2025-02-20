@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dqxtthaf5187y"]
+[gd_scene load_steps=11 format=3 uid="uid://dqxtthaf5187y"]
 
 [ext_resource type="Script" path="res://main_menu.gd" id="1_3cs75"]
 [ext_resource type="Texture2D" uid="uid://b5wsjuuvg4tc7" path="res://Sprites/UI/FrameMap.png" id="1_lkf8a"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://MenuContainer.gd" id="2_rfwk8"]
 [ext_resource type="Texture2D" uid="uid://blm8iidsf21nv" path="res://Sprites/UI/menu_button.png" id="2_rve6u"]
 [ext_resource type="Texture2D" uid="uid://bsplrnvg0c3hh" path="res://Sprites/UI/Logo1.png" id="4_bytm5"]
+[ext_resource type="Script" path="res://Options.gd" id="7_0x2rv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i5gde"]
 texture = ExtResource("1_lkf8a")
@@ -385,6 +386,7 @@ text = "Options"
 icon = ExtResource("2_rve6u")
 flat = true
 icon_alignment = 1
+script = ExtResource("7_0x2rv")
 
 [node name="Quit" type="Button" parent="MenuContainer"]
 layout_mode = 2
@@ -425,4 +427,5 @@ vertical_alignment = 1
 
 [connection signal="pressed" from="MenuContainer/New_Game" to="MenuContainer/New_Game" method="_on_pressed"]
 [connection signal="pressed" from="MenuContainer/Load_Game" to="MenuContainer/New_Game" method="_on_load_game_pressed"]
+[connection signal="pressed" from="MenuContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="MenuContainer/Quit" to="MenuContainer/New_Game" method="_on_quit_pressed"]

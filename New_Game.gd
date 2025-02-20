@@ -26,3 +26,4 @@ func _on_quit_pressed():
 
 func _on_load_game_pressed():
 	Global.goto_scene("res://LoadGame.tscn")
+

@@ -1,5 +1,5 @@
 extends Node2D
-@onready var _Dialogue = load("res://Test.dialogue")
+@onready var _Dialogue = load("res://Dialogue/Intro.dialogue")
 @onready var _DialogueLabel = $Node/DialogueLabel
 
 func _ready():

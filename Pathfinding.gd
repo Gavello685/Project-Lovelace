@@ -2,12 +2,13 @@ extends TileMap
 
 class_name Pathfinding
 
+@onready var tilemap = $"."
 var astargrid = AStarGrid2D.new()
 const range_layer = 1
 const path_layer = 2
 const main_source = 2
-const range_atlas_coords = Vector2i(1, 1)
-const path_atlas_coords = Vector2i(2, 4)
+const range_atlas_coords = Vector2i(3, 0)
+const path_atlas_coords = Vector2i(3, 1)
 
 const is_solid = "is_solid"
 
@@ -33,6 +34,7 @@ func show_path(from: Vector2i, to: Vector2i):
 	var path_taken: Array[Vector2i] = astargrid.get_id_path(from, to)
 	for cell in path_taken:
 		set_cell(path_layer, cell-Vector2i(1,1), main_source, path_atlas_coords)
+		print(tilemap.get_cell_atlas_coords(0, cell))
 
 func show_range(from: Vector2i, range: float):
 	var path_taken: Array[Vector2i]

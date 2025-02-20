@@ -426,6 +426,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="pressed" from="MenuContainer/New_Game" to="MenuContainer/New_Game" method="_on_pressed"]
-[connection signal="pressed" from="MenuContainer/Load_Game" to="MenuContainer/New_Game" method="_on_load_game_pressed"]
+[connection signal="pressed" from="MenuContainer/Load_Game" to="." method="_on_load_game_pressed"]
 [connection signal="pressed" from="MenuContainer/Options" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="MenuContainer/Quit" to="MenuContainer/New_Game" method="_on_quit_pressed"]
+[connection signal="pressed" from="MenuContainer/Quit" to="." method="_on_quit_pressed"]

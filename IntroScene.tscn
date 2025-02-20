@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfywqwrw7nmrg"]
+
+[ext_resource type="Script" path="res://IntroScene.gd" id="1_5gdv0"]
+[ext_resource type="Texture2D" uid="uid://bdl8rsmufr085" path="res://UI_Concept.jpg" id="1_ibrpi"]
+[ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_label.gd" id="3_rk2n5"]
+
+[node name="IntroScene" type="Node2D"]
+script = ExtResource("1_5gdv0")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UiConcept" type="Sprite2D" parent="MarginContainer"]
+scale = Vector2(0.482412, 0.388489)
+texture = ExtResource("1_ibrpi")
+centered = false
+
+[node name="DialogueLabel" type="RichTextLabel" parent="."]
+offset_top = 482.0
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+script = ExtResource("3_rk2n5")
+skip_pause_at_abbreviations = PackedStringArray("Mr", "Mrs", "Ms", "Dr", "etc", "eg", "ex")

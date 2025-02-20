@@ -6,3 +6,9 @@ func _ready():
 
 func _on_options_pressed():
 	Global.goto_scene("res://Options.tscn")
+
+func _on_quit_pressed():
+	get_tree().quit()
+
+func _on_load_game_pressed():
+	Global.goto_scene("res://LoadGame.tscn")

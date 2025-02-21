@@ -337,6 +337,7 @@ script = ExtResource("2_rfwk8")
 
 [node name="New_Game" type="Button" parent="MenuContainer"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../Quit")
 focus_neighbor_bottom = NodePath("../Continue")
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
@@ -391,6 +392,7 @@ script = ExtResource("7_0x2rv")
 [node name="Quit" type="Button" parent="MenuContainer"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Options")
+focus_neighbor_bottom = NodePath("../New_Game")
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_kpob6")
@@ -428,7 +430,6 @@ vertical_alignment = 1
 layout_mode = 0
 stretch_mode = 2
 menu_parent_path = NodePath("../MenuContainer")
-cursor_offset = Vector2(-100, -25)
 
 [connection signal="pressed" from="MenuContainer/New_Game" to="MenuContainer/New_Game" method="_on_pressed"]
 [connection signal="pressed" from="MenuContainer/Load_Game" to="." method="_on_load_game_pressed"]

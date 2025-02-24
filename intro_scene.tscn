@@ -1,13 +1,13 @@
 [gd_scene load_steps=6 format=3 uid="uid://cfywqwrw7nmrg"]
 
-[ext_resource type="Script" path="res://IntroScene.gd" id="1_5gdv0"]
-[ext_resource type="Texture2D" uid="uid://bdl8rsmufr085" path="res://UI_Concept.jpg" id="1_ibrpi"]
-[ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_label.gd" id="3_rk2n5"]
-[ext_resource type="Texture2D" uid="uid://blm8iidsf21nv" path="res://Sprites/UI/menu_button.png" id="4_berla"]
-[ext_resource type="PackedScene" uid="uid://w7n1fddwnc40" path="res://menu_cursor.tscn" id="5_yokoh"]
+[ext_resource type="Script" path="res://IntroScene.gd" id="1_hknts"]
+[ext_resource type="Texture2D" uid="uid://bdl8rsmufr085" path="res://UI_Concept.jpg" id="2_dc4ju"]
+[ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_label.gd" id="3_00jkb"]
+[ext_resource type="Texture2D" uid="uid://blm8iidsf21nv" path="res://Sprites/UI/menu_button.png" id="4_y8ssb"]
+[ext_resource type="PackedScene" uid="uid://w7n1fddwnc40" path="res://menu_cursor.tscn" id="5_1gdkr"]
 
 [node name="IntroScene" type="Node2D"]
-script = ExtResource("1_5gdv0")
+script = ExtResource("1_hknts")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -18,7 +18,7 @@ grow_vertical = 2
 
 [node name="UiConcept" type="Sprite2D" parent="MarginContainer"]
 scale = Vector2(0.482412, 0.388489)
-texture = ExtResource("1_ibrpi")
+texture = ExtResource("2_dc4ju")
 centered = false
 
 [node name="DialogueLabel" type="RichTextLabel" parent="."]
@@ -28,7 +28,7 @@ offset_bottom = 648.0
 size_flags_horizontal = 0
 size_flags_vertical = 8
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-script = ExtResource("3_rk2n5")
+script = ExtResource("3_00jkb")
 skip_pause_at_abbreviations = PackedStringArray("Mr", "Mrs", "Ms", "Dr", "etc", "eg", "ex")
 
 [node name="MenuContainer" type="VBoxContainer" parent="."]
@@ -46,7 +46,7 @@ focus_neighbor_bottom = NodePath("../Cafeteria")
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 text = "Dormitory"
-icon = ExtResource("4_berla")
+icon = ExtResource("4_y8ssb")
 flat = true
 icon_alignment = 1
 
@@ -57,7 +57,7 @@ focus_neighbor_bottom = NodePath("../Nurse\'s Office")
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 text = "Cafeteria"
-icon = ExtResource("4_berla")
+icon = ExtResource("4_y8ssb")
 flat = true
 icon_alignment = 1
 
@@ -68,7 +68,7 @@ focus_neighbor_bottom = NodePath("../Laboratory")
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 text = "Nurse's Office"
-icon = ExtResource("4_berla")
+icon = ExtResource("4_y8ssb")
 flat = true
 icon_alignment = 1
 
@@ -78,11 +78,11 @@ focus_neighbor_top = NodePath("../Nurse\'s Office")
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 text = "Laboratory"
-icon = ExtResource("4_berla")
+icon = ExtResource("4_y8ssb")
 flat = true
 icon_alignment = 1
 
-[node name="menu_cursor" parent="." instance=ExtResource("5_yokoh")]
+[node name="menu_cursor" parent="." instance=ExtResource("5_1gdkr")]
 menu_parent_path = NodePath("../MenuContainer")
 cursor_offset = Vector2(-120, -40)
 

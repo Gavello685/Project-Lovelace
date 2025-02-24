@@ -974,7 +974,7 @@ script = ExtResource("2_cpovr")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CursorNode"]
 texture_filter = 2
 sprite_frames = SubResource("SpriteFrames_cho0c")
-animation = &"ally_selected"
+frame_progress = 0.870806
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CursorNode"]
 shape = SubResource("RectangleShape2D_64h7u")

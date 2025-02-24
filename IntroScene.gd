@@ -5,7 +5,7 @@ extends Node2D
 func _ready():
 	DialogueManager.show_dialogue_balloon(_Dialogue)
 	DialogueManager.get_next_dialogue_line(_Dialogue)
-	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
+	DialogueManager.dialogue_ended.connect(_dialogue_ended)
 
-func _on_dialogue_ended():
+func _dialogue_ended(_Dialogue): 
 	$MenuContainer/Dormitory.grab_focus()

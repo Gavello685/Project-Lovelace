@@ -1,7 +1,8 @@
-extends TextureRect
+extends AnimatedSprite2D
 
 @export var menu_parent_path: NodePath
 @export var cursor_offset: Vector2
+signal menu_cursor_moved(parent)
 
 @onready var menu_parent:= get_node(menu_parent_path)
 
@@ -43,3 +44,4 @@ func _set_cursor_from_index(index: int) -> void:
 	global_position = Vector2(position.x, position.y + size.y / 2) - (size / 2) - cursor_offset
 	
 	cursor_index = index
+	menu_cursor_moved.emit(menu_parent)

@@ -1,10 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://w7n1fddwnc40"]
+[gd_scene load_steps=5 format=3 uid="uid://w7n1fddwnc40"]
 
 [ext_resource type="Texture2D" uid="uid://d4lkhykms80g7" path="res://Sprites/UI/hand_cursor0000.png" id="1_0170w"]
+[ext_resource type="Texture2D" uid="uid://tq8wdma7m4p8" path="res://Sprites/UI/hand_cursor0001.png" id="2_15our"]
 [ext_resource type="Script" path="res://menu_cursor.gd" id="2_lyrkl"]
 
-[node name="menu_cursor" type="TextureRect"]
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("1_0170w")
+[sub_resource type="SpriteFrames" id="SpriteFrames_hbhcp"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": ExtResource("1_0170w")
+}, {
+"duration": 2.0,
+"texture": ExtResource("2_15our")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="menu_cursor" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_hbhcp")
+autoplay = "default"
+frame_progress = 0.608801
 script = ExtResource("2_lyrkl")

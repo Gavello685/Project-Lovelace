@@ -425,10 +425,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="menu_cursor" parent="." instance=ExtResource("8_vvp8s")]
-layout_mode = 0
-stretch_mode = 2
 menu_parent_path = NodePath("../MenuContainer")
-cursor_offset = Vector2(-100, -25)
+cursor_offset = Vector2(-120, -40)
 
 [connection signal="pressed" from="MenuContainer/New_Game" to="MenuContainer/New_Game" method="_on_pressed"]
 [connection signal="pressed" from="MenuContainer/Load_Game" to="." method="_on_load_game_pressed"]

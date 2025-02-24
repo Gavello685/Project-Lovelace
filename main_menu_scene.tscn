@@ -1,17 +1,17 @@
 [gd_scene load_steps=12 format=3 uid="uid://dqxtthaf5187y"]
 
-[ext_resource type="Script" path="res://main_menu.gd" id="1_3cs75"]
-[ext_resource type="Texture2D" uid="uid://b5wsjuuvg4tc7" path="res://Sprites/UI/FrameMap.png" id="1_lkf8a"]
-[ext_resource type="Script" path="res://New_Game.gd" id="1_rw8x8"]
-[ext_resource type="FontFile" uid="uid://hs6u17bjhlcf" path="res://Sprites/UI/CyberpunkCraftpixPixel.otf" id="2_kpob6"]
-[ext_resource type="Script" path="res://MenuContainer.gd" id="2_rfwk8"]
-[ext_resource type="Texture2D" uid="uid://blm8iidsf21nv" path="res://Sprites/UI/menu_button.png" id="2_rve6u"]
-[ext_resource type="Texture2D" uid="uid://bsplrnvg0c3hh" path="res://Sprites/UI/Logo1.png" id="4_bytm5"]
-[ext_resource type="Script" path="res://Options.gd" id="7_0x2rv"]
-[ext_resource type="PackedScene" uid="uid://w7n1fddwnc40" path="res://menu_cursor.tscn" id="8_vvp8s"]
+[ext_resource type="Script" path="res://main_menu.gd" id="1_casp6"]
+[ext_resource type="Texture2D" uid="uid://b5wsjuuvg4tc7" path="res://Sprites/UI/FrameMap.png" id="2_ic6ht"]
+[ext_resource type="Script" path="res://MenuContainer.gd" id="3_0a4s8"]
+[ext_resource type="FontFile" uid="uid://hs6u17bjhlcf" path="res://Sprites/UI/CyberpunkCraftpixPixel.otf" id="4_4p21q"]
+[ext_resource type="Texture2D" uid="uid://blm8iidsf21nv" path="res://Sprites/UI/menu_button.png" id="5_iix14"]
+[ext_resource type="Script" path="res://New_Game.gd" id="6_p5u73"]
+[ext_resource type="Script" path="res://Options.gd" id="7_7s2l3"]
+[ext_resource type="Texture2D" uid="uid://bsplrnvg0c3hh" path="res://Sprites/UI/Logo1.png" id="8_1gkr7"]
+[ext_resource type="PackedScene" uid="uid://w7n1fddwnc40" path="res://menu_cursor.tscn" id="9_e0awi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i5gde"]
-texture = ExtResource("1_lkf8a")
+texture = ExtResource("2_ic6ht")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -311,14 +311,14 @@ texture = ExtResource("1_lkf8a")
 [sub_resource type="TileSet" id="TileSet_0fsaf"]
 sources/0 = SubResource("TileSetAtlasSource_i5gde")
 
-[node name="Control" type="Control"]
+[node name="MainMenuScene" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_3cs75")
+script = ExtResource("1_casp6")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_0fsaf")
@@ -333,20 +333,20 @@ offset_right = 782.0
 offset_bottom = 841.255
 scale = Vector2(0.6, 0.6)
 focus_mode = 2
-script = ExtResource("2_rfwk8")
+script = ExtResource("3_0a4s8")
 
 [node name="New_Game" type="Button" parent="MenuContainer"]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../Continue")
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
-theme_override_fonts/font = ExtResource("2_kpob6")
+theme_override_fonts/font = ExtResource("4_4p21q")
 theme_override_font_sizes/font_size = 30
 text = "New Game"
-icon = ExtResource("2_rve6u")
+icon = ExtResource("5_iix14")
 flat = true
 icon_alignment = 1
-script = ExtResource("1_rw8x8")
+script = ExtResource("6_p5u73")
 
 [node name="Continue" type="Button" parent="MenuContainer"]
 layout_mode = 2
@@ -354,10 +354,10 @@ focus_neighbor_top = NodePath("../New_Game")
 focus_neighbor_bottom = NodePath("../Load_Game")
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
-theme_override_fonts/font = ExtResource("2_kpob6")
+theme_override_fonts/font = ExtResource("4_4p21q")
 theme_override_font_sizes/font_size = 30
 text = "CONTINUE"
-icon = ExtResource("2_rve6u")
+icon = ExtResource("5_iix14")
 flat = true
 icon_alignment = 1
 
@@ -367,10 +367,10 @@ focus_neighbor_top = NodePath("../Continue")
 focus_neighbor_bottom = NodePath("../Options")
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
-theme_override_fonts/font = ExtResource("2_kpob6")
+theme_override_fonts/font = ExtResource("4_4p21q")
 theme_override_font_sizes/font_size = 30
 text = "Load Game"
-icon = ExtResource("2_rve6u")
+icon = ExtResource("5_iix14")
 flat = true
 icon_alignment = 1
 
@@ -380,36 +380,36 @@ focus_neighbor_top = NodePath("../Load_Game")
 focus_neighbor_bottom = NodePath("../Quit")
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
-theme_override_fonts/font = ExtResource("2_kpob6")
+theme_override_fonts/font = ExtResource("4_4p21q")
 theme_override_font_sizes/font_size = 30
 text = "Options"
-icon = ExtResource("2_rve6u")
+icon = ExtResource("5_iix14")
 flat = true
 icon_alignment = 1
-script = ExtResource("7_0x2rv")
+script = ExtResource("7_7s2l3")
 
 [node name="Quit" type="Button" parent="MenuContainer"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Options")
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
-theme_override_fonts/font = ExtResource("2_kpob6")
+theme_override_fonts/font = ExtResource("4_4p21q")
 theme_override_font_sizes/font_size = 30
 text = "Quit Game"
-icon = ExtResource("2_rve6u")
+icon = ExtResource("5_iix14")
 flat = true
 icon_alignment = 1
 
 [node name="Main_title" type="Sprite2D" parent="."]
 position = Vector2(567, 74)
-texture = ExtResource("4_bytm5")
+texture = ExtResource("8_1gkr7")
 
 [node name="Title_text" type="Label" parent="Main_title"]
 offset_left = -126.0
 offset_top = -40.0
 offset_right = 129.0
 offset_bottom = 6.0
-theme_override_fonts/font = ExtResource("2_kpob6")
+theme_override_fonts/font = ExtResource("4_4p21q")
 text = "Project Lovelace"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -419,12 +419,12 @@ offset_left = -106.0
 offset_top = 33.0
 offset_right = 110.0
 offset_bottom = 56.0
-theme_override_fonts/font = ExtResource("2_kpob6")
+theme_override_fonts/font = ExtResource("4_4p21q")
 text = "progredi ultra vitam"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="menu_cursor" parent="." instance=ExtResource("8_vvp8s")]
+[node name="menu_cursor" parent="." instance=ExtResource("9_e0awi")]
 menu_parent_path = NodePath("../MenuContainer")
 cursor_offset = Vector2(-120, -40)
 

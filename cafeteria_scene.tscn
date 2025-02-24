@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwl68ge31ncjx"]
+
+[ext_resource type="Script" path="res://cafeteria_scene.gd" id="1_2phw1"]
+[ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_label.gd" id="1_3f6xn"]
+
+[node name="CafeteriaScene" type="Node2D"]
+script = ExtResource("1_2phw1")
+
+[node name="DialogueLabel" type="RichTextLabel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_3f6xn")
+skip_pause_at_abbreviations = PackedStringArray("Mr", "Mrs", "Ms", "Dr", "etc", "eg", "ex")

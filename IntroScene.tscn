@@ -85,3 +85,6 @@ icon_alignment = 1
 [node name="menu_cursor" parent="." instance=ExtResource("5_yokoh")]
 menu_parent_path = NodePath("../MenuContainer")
 cursor_offset = Vector2(-120, -40)
+
+[connection signal="pressed" from="MenuContainer/Dormitory" to="." method="_on_dormitory_pressed"]
+[connection signal="pressed" from="MenuContainer/Cafeteria" to="." method="_on_cafeteria_pressed"]

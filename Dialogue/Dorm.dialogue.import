@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://lemb7ajryyvc"
+path="res://.godot/imported/Dorm.dialogue-499b97594542304117548d52f43e00bf.tres"
+
+[deps]
+
+source_file="res://Dialogue/Dorm.dialogue"
+dest_files=["res://.godot/imported/Dorm.dialogue-499b97594542304117548d52f43e00bf.tres"]
+
+[params]
+
+defaults=true

@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://c8a4auu8b2aau"
+path="res://.godot/imported/Cafeteria.dialogue-93a2c7edca6289a4cbe9e547a3616c10.tres"
+
+[deps]
+
+source_file="res://Dialogue/Cafeteria.dialogue"
+dest_files=["res://.godot/imported/Cafeteria.dialogue-93a2c7edca6289a4cbe9e547a3616c10.tres"]
+
+[params]
+
+defaults=true

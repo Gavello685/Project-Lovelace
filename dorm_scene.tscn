@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://ecghpx212fsu"]
+
+[ext_resource type="Script" path="res://dorm_scene.gd" id="1_ds0e5"]
+[ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_label.gd" id="2_1etug"]
+
+[node name="DormScene" type="Node2D"]
+script = ExtResource("1_ds0e5")
+
+[node name="UnitContainer" type="VBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DialogueLabel" type="RichTextLabel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_1etug")
+skip_pause_at_abbreviations = PackedStringArray("Mr", "Mrs", "Ms", "Dr", "etc", "eg", "ex")

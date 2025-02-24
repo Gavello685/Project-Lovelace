@@ -84,7 +84,7 @@ start={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://Test.dialogue", "res://Dialogue/Intro.dialogue")
+locale/translations_pot_files=PackedStringArray("res://Test.dialogue", "res://Dialogue/Intro.dialogue", "res://Dialogue/Dorm.dialogue", "res://Dialogue/Cafeteria.dialogue")
 
 [rendering]
 

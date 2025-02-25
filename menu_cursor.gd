@@ -2,11 +2,16 @@ extends AnimatedSprite2D
 
 @export var menu_parent_path: NodePath
 @export var cursor_offset: Vector2
+@export var cursor_flip: bool
 signal menu_cursor_moved(parent)
 
 @onready var menu_parent:= get_node(menu_parent_path)
 
 var cursor_index: int = 0
+
+func _ready():
+	if cursor_flip:
+		self.flip_h = true
 
 func _process(delta):
 	var input := Vector2.ZERO

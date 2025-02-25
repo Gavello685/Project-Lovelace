@@ -385,7 +385,7 @@ icon_alignment = 1
 
 [node name="menu_cursor" parent="." instance=ExtResource("5_k0syl")]
 menu_parent_path = NodePath("../VBoxContainer")
-cursor_offset = Vector2(-150, -40)
+cursor_offset = Vector2(-120, -40)
 
 [connection signal="pressed" from="VBoxContainer/Save1" to="." method="_on_save_1_pressed"]
 [connection signal="pressed" from="VBoxContainer/Save2" to="." method="_on_save_2_pressed"]

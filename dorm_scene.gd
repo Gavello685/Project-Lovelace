@@ -9,4 +9,4 @@ func _ready():
 	DialogueManager.dialogue_ended.connect(_dorm_dialogue_ended)
 
 func _dorm_dialogue_ended(_Dorm_Dialogue):
-	Global.goto_scene("res://IntroScene.tscn")
+	Global.goto_scene("res://intro_scene.tscn")

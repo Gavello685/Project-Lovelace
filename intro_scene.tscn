@@ -32,9 +32,9 @@ script = ExtResource("3_00jkb")
 skip_pause_at_abbreviations = PackedStringArray("Mr", "Mrs", "Ms", "Dr", "etc", "eg", "ex")
 
 [node name="MenuContainer" type="VBoxContainer" parent="."]
-offset_left = 315.0
+offset_left = 9.0
 offset_top = 83.0
-offset_right = 611.0
+offset_right = 305.0
 offset_bottom = 639.0
 scale = Vector2(0.5, 0.5)
 
@@ -84,7 +84,8 @@ icon_alignment = 1
 
 [node name="menu_cursor" parent="." instance=ExtResource("5_1gdkr")]
 menu_parent_path = NodePath("../MenuContainer")
-cursor_offset = Vector2(-120, -40)
+cursor_offset = Vector2(-320, -40)
+cursor_flip = true
 
 [connection signal="pressed" from="MenuContainer/Dormitory" to="." method="_on_dormitory_pressed"]
 [connection signal="pressed" from="MenuContainer/Cafeteria" to="." method="_on_cafeteria_pressed"]

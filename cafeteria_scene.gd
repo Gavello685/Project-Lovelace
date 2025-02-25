@@ -9,4 +9,4 @@ func _ready():
 	DialogueManager.dialogue_ended.connect(_cafeteria_dialogue_ended)
 
 func _cafeteria_dialogue_ended(_Cafeteria_Dialogue):
-	Global.goto_scene("res://IntroScene.tscn")
+	Global.goto_scene("res://intro_scene.tscn")

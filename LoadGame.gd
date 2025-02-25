@@ -6,10 +6,10 @@ var save3: Array[Array]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var buttons = $VBoxContainer.get_children()
+	
 	$VBoxContainer/Save1.grab_focus()
 	
-	var buttons = $VBoxContainer.get_children()
-	buttons.pop_front()
 	# save1
 	var save1Unit1 = Unit.new()
 	save1Unit1.charData = CharData.new("Parsen","Rogue",69,0)

@@ -428,7 +428,7 @@ vertical_alignment = 1
 menu_parent_path = NodePath("../MenuContainer")
 cursor_offset = Vector2(-120, -40)
 
-[connection signal="pressed" from="MenuContainer/New_Game" to="MenuContainer/New_Game" method="_on_pressed"]
+[connection signal="pressed" from="MenuContainer/New_Game" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="MenuContainer/Load_Game" to="." method="_on_load_game_pressed"]
 [connection signal="pressed" from="MenuContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="MenuContainer/Quit" to="." method="_on_quit_pressed"]

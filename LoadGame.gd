@@ -46,17 +46,17 @@ func _process(delta):
 
 func _on_save_1_pressed():
 	Global.units = save1
-	Global.goto_scene("res://main_node.tscn")
+	Global.goto_scene("res://combat_scene.tscn")
 
 func _on_save_2_pressed():
 	Global.units = save2
-	Global.goto_scene("res://main_node.tscn")
+	Global.goto_scene("res://combat_scene.tscn")
 	pass
 
 func _on_save_3_pressed():
 	Global.units = save3
-	Global.goto_scene("res://main_node.tscn")
+	Global.goto_scene("res://combat_scene.tscn")
 	pass
 
 func _on_cancel_pressed():
-	Global.goto_scene("res://main_menu.tscn")
+	Global.goto_scene("res://main_menu_scene.tscn")
